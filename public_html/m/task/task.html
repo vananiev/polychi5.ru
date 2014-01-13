@@ -1,0 +1,299 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+<?php
+	$toshow = require(SCRIPT_ROOT.'/'.$INCLUDE_MODULES['TASK']['PATH'].'/kernel/task_act.php');
+	if($toshow==false){
+		echo "</div></div>";
+		require_once(MOBILE_ROOT."/footer.php");
+		return;
+	};
+?>
+
+<?php
+	//получаем обновленные сведения о задании
+	$query="SELECT * FROM `%s` WHERE id = '%d'";
+	$vars = array($table_task,$id);
+	$res = $task->db->query($query,$vars) or die($task->db->error());
+	$row = $res->fetch_array();
+?>
+
+
+	<a href="<?php echo url(NULL, 'TASK','tasks');?>" ><div class='task'><?php echo $id; ?></div></a>
+
+		<?php
+			if(check_right('TSK_CNG_STATUS'))
+				{
+	/*--------------------------------------- Административная функция -----------------------------------------------------------------------------*/
+				?>
+				<form id="status_form" method="POST" action="<?php echo url(NULL,$URL['MODULE'], 'task', 'id='.$id);?>">
+					<select class='task' size="1" name="status" onchange="javascript: document.getElementById('status_form').submit()">
+						<option <?php if($row['status']=='NEW')echo "selected";?> value="NEW">Новый</option>
+						<option <?php if($row['status']=='GETS')echo "selected";?> value="GETS">Мои правила</option>
+						<option <?php if($row['status']=='WAIT')echo "selected";?> value="WAIT">Идет решение</option>
+						<option <?php if($row['status']=='SOLV')echo "selected";?> value="SOLV">Решен</option>
+						<option <?php if($row['status']=='REMK')echo "selected";?> value="REMK">Перерешать</option>
+						<option <?php if($row['status']=='OK')echo "selected";?> value="OK">Выполнен</option>
+						<option <?php if($row['status']=='NSOL')echo "selected";?> value="NSOL">Не решен</option>
+						<option <?php if($row['status']=='LOCK')echo "selected";?> value="LOCK">Заблокирован</option>
+					</select>
+				</form>
+				<?php
+	/*--------------------------------------- Административная функция -----------------------------------------------------------------------------*/
+				}
+			else
+				{
+				if($row['status'] =="REMK")
+					echo "<div class='task'>Перерешать</div>";
+				else if($row['status'] == "OK" || $row['status'] == "SOLV")
+					echo "<div class='task'>Готов</div>";
+		      else
+		         echo "<div class='task'>Не готов</div>";
+				}
+		?>
+	<div class='task'>
+		<?php
+			$section = $row['section'];
+			$section = explode (' ', $section);
+			foreach($section as &$word)
+				$word = mb_substr($word,0, 11, SITE_CHARSET);
+			$section = join(' ', $section);
+			echo htmlspecialchars($section,ENT_QUOTES);
+		?></div>
+
+	<div class='task'>
+		<?php
+			//if($row['status']!='GETS')
+				echo "Решить до ".date('d M, G:i',strtotime($row['resolve_until']));
+			/*else
+				{
+				$r_until = strtotime($row['resolve_until']) - strtotime($row['add_date']);	//абстрагируемся от часового пояса
+				$days = (int)($r_until/3600/24);
+				$hours =  (int)(($r_until - $days*3600*24)/3600);
+				echo $days. " дн ".$hours." ч";
+				echo "<div class='info_text' >с момента выбора решающего</div>" ;
+				}*/
+		?>
+		</div>
+
+  		<?php
+		if(!defined('TASK_LOCKED'))
+			echo "<div class='task'>".get_task_link($row['id'], "", "задание")."</div>";
+		 ?>
+
+		<div class='task'>
+		<?php
+		/***********************************************
+        	Комиссия системы 9% с учеников и 9% с решающих.
+        	Поэтому стимость для решающих на 18% ниже, чем для учеников.*/
+		if(isset($_SESSION['user_id'])){
+			if(($row['status']=='NEW' || $row['status']=='GETS')&&
+					( $row['user']==$_SESSION['user_id'] || check_right('TSK_PRICING_OTHERS') )   )
+				{
+				//ученик, владелец задания, или администратор изменяют цену, если статус задания NEW или GETS
+				?>
+				<form method="POST" action="<?php echo url(NULL, $URL['MODULE'], 'task', 'id='.$row['id']); ?>">
+					<input type="text" name="price" style='font-size:14px;width:52px;' value="<?php echo $row['price'];?>">
+					<span style='position:relative; top:-5px;left:-25px;font-size:8px;'>руб</span>
+					<input type="submit" value="Изменить цену" name="set">
+				</form>
+				<?php }
+			elseif($row['status']=="GETS" && check_right('TSK_SOLVING'))
+				{
+				//подать заявку на решение
+				$solvers = unserialize($row['select_solver']);
+				for($i=0;isset($solvers[$i][0]);$i++)
+					{
+					if($solvers[$i][0] == $_SESSION['user_id'])
+						{$price = price_after_all_comm($solvers[$i][1]);
+						echo "<div class='predlozhenie'>Ваша заявка: цена - {$price} руб";
+						//show_msg(NULL,"Вами была отослана заявка на решения: цена - {$price}",MSG_INFO,MSG_NO_BACK);
+						?>
+							<form method="POST" action="<?php echo url(NULL, $URL['MODULE'], 'task', 'id='.$row['id']); ?>" style='position:relative;width:100%;'>
+								<input type="hidden" name="solver_price" value="-1">
+								<input type="submit" value="[x]" name="send" title='Отказаться от решения' style='position:absolute;right:0px;top:-30px;font-size:8px;cursor:pointer;opacity:0.6;'>
+							</form>
+						</div>
+						<?php
+						}
+					}
+				?>
+					<form method="POST" action="<?php echo url(NULL, $URL['MODULE'], 'task', 'id='.$row['id']); ?>">
+						<input type="text" size="5" name="solver_price" value="<?php echo price_after_all_comm($row['price']);?>">
+						<input type="submit" value="Подать заявку на решение." name="send">
+						<br>
+						<span class='info_text'> Начайте решение, после того как ВАС выберут решающим
+							(на e-mal Вам придет сообщение.
+							Или узнайте об этом на этой странице - появится грава 'Решающий' с вашим логином )
+						</span>
+					</form>
+			<?php }
+			else if( $_SESSION['user_id'] == 0)
+				echo "<div class='price'>".$row['price']."<span class='price_rub'>руб</span></div>";
+			else if( user_in_group('SOLVER') )
+				echo "<div class='price'>".price_after_all_comm($row['price'])."<span class='price_rub'>руб</span></div>";
+			else
+				echo "<div class='price'>".$row['price']."<span class='price_rub'>руб</span></div>";   //все остальные случаи
+			}
+		else
+			{echo "<div class='price'>".$row['price']."<span class='price_rub'>руб</span></div>";}
+		?>
+		</div>
+
+
+	<?php
+	if( ($row['status']=="WAIT" ||
+		$row['status']=="SOLV" ||
+		$row['status']=="REMK" ||
+		$row['status']=="OK" ||
+		$row['status']=="NSOL") && user_in_group('SOLVER') )
+		{?>
+			<div class='task'><?php
+			$query="SELECT login
+	            FROM `$table_users`
+	            WHERE id = '{$row['solver']}'";
+			$res2 = mysql_query($query,$msconnect_users) or die(mysql_error());
+			$row2 = mysql_fetch_array($res2);
+			echo $row2['login']; ?>
+			</div>
+	<?php } ?>
+	<?php
+		if($row['status']=="GETS" &&		//выбор решающего
+		isset($_SESSION['user_id']) &&
+		($row['user']==$_SESSION['user_id'] || check_right('TSK_SELECT_SOLVER_OTHERS') ))
+		{
+					$solvers = unserialize($row['select_solver']);
+					if(isset($solvers[0][0]))
+						{ ?>
+						<form method="POST" action="<?php echo url(NULL,$URL['MODULE'], 'task', 'id='.$id); ?>">
+							<p>Выбери кто будет решать задание:</p>
+							<select id="solvers" class='task' name="solver">
+							<?php
+							for($i=0;isset($solvers[$i][0]);$i++)
+								{
+								$usrid = $solvers[$i][0];
+								$row2 = get_user($usrid, 'login');
+								?>
+								<option  value="<?php echo serialize($solvers[$i]); ?>" userid="<?php echo $usrid; ?>">
+									<?php echo "{$row2['login']} : Цена - {$solvers[$i][1]} руб"?></option>
+								<?php } ?>
+							</select>
+							<input type="button" value="Инфо" id="about_user">
+							<input type="submit" value="Выбрать решающего" name="set">
+						</form>
+						<script type="text/javascript">
+							$('#about_user').click( function () {
+    							var usrid = $('#solvers').find('option:selected').attr('userid');
+    							window.open(
+  									'<?php  echo url(NULL, 'USERS', 'about_user'); ?>?user_id=' + usrid,
+  									'_blank'
+								);
+  							});
+						</script>
+						<?php }
+						else
+							{
+							echo "<div class='task'>Пока никто не взялся за решение</div>";
+							}
+						?>
+
+		<?php }?>
+	<?php if($row['status']=="OK" || $row['status']=="REMK" || $row['status']=="SOLV"){?>
+	<div class='task'>
+  		<?php
+		if(!defined('TASK_LOCKED'))
+			{
+			$files = glob( SOLVING_ROOT.'/'.$row['id'].'.*');
+			if(isset($files[0])){
+				echo url('решение', 'TASK', 'get_solving', 'id='.$id);
+			}else{
+				echo "Ошибка! Решение не найдено. Если Вы Решающий попробуйте загрузить его еще раз. В случае повторной ошибки обратитесь в службу поддержки";
+				}
+			}
+		else
+			echo "задание заблокировано";
+  		 ?>
+	</div>
+
+	<?php
+		//решение можно менять в течении 7 дней, учеником, который задал задание или администратором
+		if(strtotime($row['solv_date']) > (time()-7*24*3600)&&
+			$row['status']!='OK' &&
+			isset($_SESSION['user_id']) && ($row['user']==$_SESSION['user_id'] || check_right('TSK_RATING_OTHERS') ))
+			{
+			?>
+			<form method="POST" id="rating_form" action="<?php echo url(NULL,$URL['MODULE'], 'task', 'id='.$id); ?>">
+		   <select class='task' name="rating" onchange="javascript: document.getElementById('rating_form').submit()">
+				<option <?php if($row['rating']==0)echo "selected";?> value='0'>Я, не удовлетворен решением. Перерешать.</option>
+				<option <?php if($row['rating']==1)echo "selected";?>>1</option>
+				<option <?php if($row['rating']==2)echo "selected";?>>2</option>
+				<option <?php if($row['rating']==3)echo "selected";?>>3</option>
+				<option <?php if($row['rating']==4)echo "selected";?>>4</option>
+				<option <?php if($row['rating']==5)echo "selected";?>>5</option>
+				</select><!--input type="submit" value="Оценить" name="set"-->
+			</form>
+			<?php }
+			else
+			{
+			if($row['rating']!=0)
+				echo "<div class='task'>Оценка ".(0+$row['rating'])."</div>";
+			}
+			 ?>
+
+	<?php } ?>
+
+	<?php
+	if(isset($_SESSION['user_id']) && $row['status']!="OK"){
+		//согласиться на решения
+		if( $row['status']=="NEW" && (check_right('TSK_SOLVING')|| check_right('TSK_SOLVING_OTHERS')) )
+			{
+			?>
+					<form method="POST" action="<?php echo url(NULL,$URL['MODULE'], 'task', 'id='.$row['id']); ?>">
+						<input type="hidden" name="agree" value="<?php echo (int)$_SESSION['user_id'];?>">
+						<input class='task' type="submit" value="Солгашаюсь решить задание и приступаю к решению" name="send">
+					</form>
+		<?php }
+		//загрузка решения
+		else if
+			( ( $row['solver']==$_SESSION['user_id'] || check_right('TSK_SOLVING_OTHERS') ) &&
+			($row['status']=="WAIT" || $row['status']=="REMK" || $row['status']=="SOLV")
+			)
+			{
+			?>
+					<form method="POST" action="<?php echo url(NULL,$URL['MODULE'], 'task', 'id='.$row['id']); ?>" enctype="multipart/form-data">
+						<input class='task' type="file" name="filename" size="10" />
+						<input class='task' type="submit" value="Отправить решение" name="B1" />
+					</form>
+		<?php } ?>
+	<?php } ?>
+
+<?php
+	if(($row['status']=='NEW' || $row['status']=='GETS') &&
+		isset($_SESSION['user_id']) &&
+		($row['user']==$_SESSION['user_id'] || check_right('TSK_DEL_OTHERS_TASK') ))
+		{
+		//удаление задания пользователем
+		?>
+		<form method="POST" action="<?php echo url(NULL,$URL['MODULE'], 'task', 'id='.$row['id']); ?>">
+				<input type="hidden" name="delete_by_user" value="<?php echo $id;?>">
+				<input class='task' type="submit" value="Удалить задание" name="send">
+		</form>
+		<?php
+		}
+?>
+
+<?php
+	// вывод диалога
+	if( TASK_DIALOG )
+		{
+		$ret = call_user_func($task->show_task_dialog, $row);
+		if( $ret !== true) show_msg(NULL, $res, MSG_WARNING);
+		}
+?>
+
+</div></div>
+
+<?php require_once(MOBILE_ROOT."/footer.php");?>

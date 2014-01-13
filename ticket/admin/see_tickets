@@ -1,0 +1,145 @@
+<?php /*
+		**************************************************************
+			Просмотр тикетов
+		**************************************************************
+		параметры POST:
+		status - отобразить тикеты с данным статусом
+		new_status - изменить статус тикета с ticket_id
+		ticket_id - номер тикета, чей статус меняем
+*/
+		if(isset($_POST['status'])) $status = mysql_real_escape_string($_POST['status'],$msconnect_ticket);
+		if(isset($_POST['new_status'])) $new_status = mysql_real_escape_string($_POST['new_status'],$msconnect_ticket);
+		if(isset($_POST['ticket_id']) && is_numeric($_POST['ticket_id'])) $ticket_id = (int)$_POST['ticket_id'];
+?>
+<?php
+	if ( !check_right('TKT_SUPPORT_ANS', R_MSG)) return; 	//проверка прав 
+?>
+<h1><?php echo $URL['TITLE'];?></h1>
+<p align="center"><u>Запросы в системе</u>:</p>
+<div align="center">
+	<table class='table_tickets' id="table1">
+		<tr class="table_header">
+			<td align="center">Номер</td>
+			<td align="center">Заголовок</td>
+			<td align="center">Тема</td>
+			<td align="center">Добавлен</td>
+			<td align="center">Статус</td>
+			<td align="center">Изменен</td>
+		</tr>
+		<?php
+		    //меняем статус
+		    if(isset($new_status) && isset($ticket_id) )
+		    	{
+				if ( !check_right('TKT_CNG_STATUS', R_MSG)) return; 	//проверка прав 
+	        	$query = "UPDATE `$table_tickets`
+	        				SET  status = '{$new_status}'
+	        				WHERE id = '{$ticket_id}'";
+				mysql_query($query,$msconnect_ticket) or die(mysql_error());
+		    	}
+
+			$on_page =10;	//число сток в таблице
+		        $query = "SELECT count(id) FROM $table_tickets ";
+			if (isset($status) && $status!='-1')
+		        	  $query .= "  WHERE status = '{$status}'";
+		        $res = mysql_query($query,$msconnect_ticket) or die(mysql_error());
+		       	$row = mysql_fetch_array($res);
+		       	$max = $row['count(id)'];
+				if(empty($URL['PAGE']))
+					$p=1;
+				else
+					$p=$URL['PAGE'];
+				$from = ($p-1)*$on_page;
+			//формируем запрос в систему тикетов
+		        $query = "SELECT * FROM `$table_tickets` ";
+		        if (isset($status) && $status!='-1')
+		        	$query .= "  WHERE status = '{$status}' ";
+				if($_SESSION['user_id']!=0)
+					{
+					if(isset($status) && $status!='-1')
+						$query .= " AND id <> 0 ";
+					else
+						$query .= " WHERE id <> 0 ";
+					}
+			$query .= "  ORDER BY id DESC LIMIT $from,$on_page ";
+			$res = mysql_query($query,$msconnect_ticket) or die(mysql_error());
+			while($row = mysql_fetch_array($res))
+				{
+		?>
+				<tr class='tr_ticket_other'>
+					<td align="center"><?php 
+											$args = 'ticket_id='.$row['id'];
+											if(isset($_GET['mail'])) 
+												$args .= "&mail=".$_GET['mail'];
+											echo url($row['id'], 'TICKET', 'dialog', $args); 
+										?>
+					</td>
+					<td align="center"><?php echo htmlspecialchars($row['headline'],ENT_QUOTES); ?></td>
+					<td align="center">
+						<?php
+                       	if($row['thematic']=='HOW')
+							echo "<font color='#0000AA'>Работа системы</font>";
+						else if($row['thematic']=='MONEY')
+							echo "<font color='#AA0000'>Оплата</font>";
+						else if($row['thematic']=='OTHER')
+							echo "<font color='#00AA00'>Без категории</font>";
+						else
+							echo $row['thematic'];
+						?>
+					</td>
+					<td align="center"><?php echo date(DATE_TIME_FORMAT,strtotime($row['reg_date'])); ?></td>
+					<td align="center">
+						<?php if (check_right('TKT_CNG_STATUS')) 
+							{ ?>
+							<form method="POST" action="<?php echo url(NULL, 'TICKET', 'admin/see_tickets');?>" name="see_ticket" style="text-align: center;margin:0px;">
+								<?php if(isset($status)){ ?><input type='hidden' name='status' value='<?php echo htmlspecialchars($status,ENT_QUOTES); ?>'><?php } ?>
+								<input type='hidden' name='ticket_id' value='<?php echo (int)$row['id']; ?>'>
+								<select align='center' name="new_status">
+									<option <?php if($row['status']=='NEW')echo "selected";?> value='NEW'>Новый</option>
+									<option <?php if($row['status']=='OPENED')echo "selected";?> value='OPENED'>Открыт</option>
+									<option <?php if($row['status']=='ANSWERED')echo "selected";?> value='ANSWERED'>Ответ дан</option>
+									<option <?php if($row['status']=='CLOSED')echo "selected";?> value='CLOSED'>Закрыт</option>
+									<input type="submit" value=">" name="B1">
+								</select>
+							</form>
+							<?php
+							}
+							else
+							{
+							if($row['status'] == "OPENED")
+								echo "<font color='blue'>Ожидается ответ</font>";
+							else if($row['status'] == "CLOSED")
+								echo "<font color='#800080'>Закрыт</font>";
+							else if($row['status'] == "ANSWERED")
+								echo "Ответ дан";
+							else if($row['status'] == "NEW")
+								echo "<font color='red'>Новый</font>";
+							else
+								echo htmlspecialchars($row['status'],ENT_QUOTES);
+							} ?>
+					</td>
+					<td align="center"><?php echo date(DATE_TIME_FORMAT,strtotime($row['last_visit'])); ?></td>
+				</tr>
+				<?php } ?>
+	</table>
+	<?php 	//вывод под таблицей ссылок перехода на страницы 'переидти'
+		get_table_nav('TICKET', 'admin/see_tickets', NULL, $max, $on_page); 
+	?>
+	<form method="POST" action="<?php echo url(NULL, 'TICKET', 'admin/see_tickets');?>" name="see_ticket" style="text-align: left">
+	    <p align='center'><select name="status">
+		    <option <?php if(!isset($status) || $status=='-1')echo "selected";?> value='-1'>Все</option>
+			<option <?php if(isset($status) && $status=='NEW')echo "selected";?> value='NEW'>Новые</option>
+			<option <?php if(isset($status) && $status=='OPENED')echo "selected";?> value='OPENED'>Открытые</option>
+			<option <?php if(isset($status) && $status=='ANSWERED')echo "selected";?> value='ANSWERED'>Ответ дан</option>
+			<option <?php if(isset($status) && $status=='CLOSED')echo "selected";?> value='CLOSED'>Закрытые</option>
+			<input type="submit" value="Отобразить тикеты с данным статусом" name="B1">
+		</select></p>
+	</form>
+</div>
+<style type="text/css">
+.table_tickets {
+			width:1000px;
+			}
+.table_tickets td  {
+			border:1px solid #888;
+			}
+</style>

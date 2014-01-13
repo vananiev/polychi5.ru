@@ -1,0 +1,102 @@
+##Çàïðåòèòü äîñòóï âñåì. Ðàçðåøåíèÿ èäóò íèæå
+	# Íåëüçÿ ïðîñòî deny from all èëè <Files ~ ".*">, ò.ê. ýòî ïðèâîäèò ê áëîêèðîâàíèþ çàïðîñîâ
+	# êîòîðûå èäóò â ïàïêó, êîòîðàÿ íå ñóùåñòâóåò ( â òîì ÷èñëå äëÿ ×ÏÓ ).
+	# Äàííûé ìåòîä "áëîêèðîâàíèÿ âñåãî" íå áëîêèðóåò çàïðîñû ê íåñóùåñòâóþùèì ïàïêàì
+<Files ~ "\..*">
+	order allow,deny
+	deny from all
+</Files>
+
+#Çàïðåùàåì âûâîä ñïèñêà ôàéëîâ â ïàïêå
+Options -Indexes
+
+# Äëÿ ðàáîòû èñïðàâëåíèÿ URL-îâ
+#Options FollowSymLinks
+RewriteEngine on
+
+# Äîñòóï ðàçðåøåí òîëüêî ê ôàéëàì
+<Files ~ "\.(jpg|jpeg|png|ico|gif|swf|css|js|rar|txt|json)$">
+	order allow,deny
+	allow from all
+</Files>
+
+<FilesMatch "m\/">
+	order allow,deny
+	allow from all
+</FilesMatch>
+
+# Ðàçðåøàåì äîñòóï ê index.php
+<Files ~ "^index.php$">
+	order allow,deny
+	allow from all
+</Files>
+<Files ~ "^$">
+	order allow,deny
+	allow from all
+</Files>
+
+# Ñïèñîê ðàçðåøåííûõ ôàéëîâ
+<Files ~ "^(robots.txt|sitemap.xml|53cacf22ac6b.html|c7c4176e5afa.html)$">
+	order allow,deny
+	allow from all
+</Files>
+
+# Çàïðåò ïðîñìîòðà .htaccess .htpasswd
+<Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+</Files>
+
+
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^public_html/(.*)$ http://%1/$1 [R=301,L,QSA]
+
+# Åñëè èçîáðàæåíèå íå íàéäåíî èùåì â ïàïêå òåìû
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^public_html/images(.*)$ /files/themes/default/images$1 [L,QSA]
+
+
+# переход с корня вордпресс
+RewriteCond %{QUERY_STRING} ^$
+RewriteRule public_html/wp/$ / [L,R=301]
+
+# paymant result redirect, if cookie 'mobile=true' (setted by m.polychi5.ru)  
+RewriteCond %{HTTP_COOKIE} mobile=true [NC]
+RewriteRule (webmoney/success.html|webmoney/fail.html|yandex/result.html|robokassa/fail.html|robokassa/success.html) http://m.polychi5.ru/$1 [R=307,L]
+
+# get cookies
+RewriteCond %{HTTP_COOKIE} uid=([^;]+) [NC]
+RewriteRule . - [ENV=uid:%1]
+RewriteCond %{HTTP_COOKIE} authorize=([^;]+) [NC]
+RewriteRule . - [ENV=authorize:%1]
+#RewriteCond %{HTTP_COOKIE} PHPSESSID=([^;]+) [NC]
+#RewriteRule . - [ENV=PHPSESSID:%1]
+
+# alias sites. Payment pages
+RewriteCond %{REQUEST_URI} ^/task/get_balance\.html$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/task/get_solving\.html$ [NC]
+RewriteCond %{HTTP_HOST} !^polychi5\.ru$ [NC]
+RewriteRule . http://polychi5.ru%{REQUEST_URI}?uid=%{ENV:uid}&authorize=%{ENV:authorize} [L,QSA]
+
+
+# Ðàáîòà ñ ×ÏÓ
+# Åñëè ñòðàíèöà íå íàéäåíà èäåì íà èíäåêñ
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php [L]
+
+
+
+
+# Åñëè ñòðàíèöà íå íàéäåíà
+#ErrorDocument 404 /?info=how
+# Åñëè îøèáêà äîñòóïà
+#ErrorDocument 403 /?info=how 
+
+
+
+# Äîñòóï ðàçðåøåí ÿíäåêñ è ãóãë ôàéëîâ
+<Files ~ "google">
+	order allow,deny
+	allow from all
+</Files>

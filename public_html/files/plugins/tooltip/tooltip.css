@@ -1,0 +1,81 @@
+﻿/*--------------------------------Всплывающие подсказки-------------------------------*/
+/*Использование:
+		смотри show_msg() в function.php
+*/
+.tooltips {
+			display:none;
+			text-decoration: none;
+			border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; 
+			-moz-box-shadow: 0 0 10px rgba(55, 55, 55, 0.5);
+			box-shadow: 0 0 10px rgba(55, 55, 55, 0.5);
+			-webkit-box-shadow: 0 0 10px rgba(55, 55, 55, 0.5);
+			font-family: sans-serif, Calibri, Tahoma, Geneva;		
+			font-size:12px;
+			font-style:normal;
+			left:40%;top:50%;				/*кроме IE*/
+			position:fixed;			/*кроме IE*/
+			position=absolute; top=100px;
+			margin-left: 0;
+			width: 250px;
+			z-index: 99;
+			opacity:1.0;
+			color:#333333;
+			}
+.tooltips:hover {
+			-moz-box-shadow: 0 0 10px rgba(55, 55, 55, 1);
+			box-shadow: 0 0 10px rgba(55, 55, 55, 1);
+			-webkit-box-shadow: 0 0 10px rgba(55, 55, 55, 1);
+			opacity:1.0;
+			}
+.classic { padding: 0.8em 1em;}
+.custom { padding: 0.5em 0.8em 0.8em 2em; }
+* html div:hover { background: transparent; }
+.classic {background: #FFFFAA; border: 1px solid #FFAD33; }
+.critical { background: #FFCCAA; border: 1px solid #FF3334;	}
+.help { cursor: help; background: #9FDAEE; border: 1px solid #2BB0D7;	}
+.info { cursor: help; background: #9FDAEE; border: 1px solid #2BB0D7;}
+.warning { background: #FFFFAA; border: 1px solid #FFAD33; }
+.tooltip_button {text-decorate:none;}
+/*
+.critical:before{
+			border: 0; margin: -10px 0 0 -55px;
+			float: left; position: absolute;
+			content: url('tooltip/Critical.png');
+		}
+.help:before{
+			border: 0; margin: -10px 0 0 -55px;
+			float: left; position: absolute;
+			content: url('tooltip/Help.png');
+		}
+.info:before{
+			border: 0; margin: -10px 0 0 -55px;
+			float: left; position: absolute;
+			content: url('tooltip/Info.png');
+		}
+.warning:before{
+			border: 0; margin: -10px 0 0 -55px;
+			float: left; position: absolute;
+			content: url('tooltip/Warning.png');
+		}
+*/
+.tooltips img {
+			border: 0; margin: -10px 0 0 -55px;
+			float: left; position: absolute;
+		}
+.tooltips em {color: #333333;
+			font-family: sans-serif,Candara, Tahoma, Geneva; font-size:1.4em; font-weight: bold;
+			display: block; padding: 0.2em 0 0.6em 0;
+		}
+.tooltips a:hover{
+		cursor: pointer;
+		}
+/*--------------------------------------------------------------------------------------*/
+
+/*--------------------- Вывод скрывающихся блоков --------------------------------------*/
+.box-top 		{ position:relative; width:100%;	top:0; 		left:0; height:auto;  margin:0;padding:0;}
+.box-middle 		{ position:relative; width:100%;height=100%;	}
+.box-content	{ position:relative; width:90%;		top:0;		left:0;		margin:0; padding:0 5% 0 5%;}
+.box-content-ie	{ position:relative; padding:30px 20px;border:1px #111 solid; background:#FEFEFE; width:100%; }
+.box-img-content{ position:absolute; width:100%; 	top:0;		height:100%;padding:0;margin:0;	height:100%; margin-top=-4px;}
+.box-bottom 		{ position:relative; width:100%;	bottom:0; margin-top=-4px;	}
+/*--------------------------------------------------------------------------------------*/

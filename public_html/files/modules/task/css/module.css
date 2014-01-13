@@ -1,0 +1,191 @@
+.task_blockname { color:grey; font: normal 1em; margin:20px; border-bottom: 1px groove gray; }
+.task_blockcontent{ border: 1px solid grey; border-radius:5px; background: #FEFEFE; box-shadow: 0 0 10px rgba(55, 55, 55, 0.5); height:auto;}
+
+.task_incon{
+	margin: 10px 0 10px 10% ;
+	padding:8px;
+	width:30%;
+	float:left;
+	box-shadow: 0 0 10px rgba(100, 100, 100, 0.5);
+	}
+.task_incon img { width:64px; height:64px; margin: 12px 32px; float:left;}
+.task_incon  h3	a{ margin: 16px 0 8px 0; padding:0; font: bold; text-align:left; color: grey; text-transform:uppercase; text-decoration: none;}
+.task_incon  a	{ text-decoration: none; }
+.task_incon  .task_modinfo { color:grey; font-size:0.9em; line-height:1em;}
+
+.order_box .info-img{
+	border:0;
+	cursor: pointer;
+	width:14px;
+	height: 14px;
+}
+
+.order_box	{
+			position:static; width=700px; width:90%; max-width:700px; border:1px solid #FFA71F;
+			margin-bottom:40px; /* для узора*/
+			box-shadow: 0 0 5px black; /* Параметры тени */
+			box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+			-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
+			-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
+			z-index: 20;
+			font-size: 1.1em;
+			padding: 40px 70px;
+			}
+.order_box_animate:before, .order_box_animate:after{display: none;}
+/*.order_box:before{
+	content: url(../pattern.png);
+	border:none;
+	position:absolute; 
+	top:0px;
+	margin-left:-253px;
+	left:50%;
+	opacity:0.7;
+	-moz-opacity:0.7;
+	z-index:-10;
+}*/
+.order_box:after{
+	content: url(../pattern.png);
+	border:none;
+	position:absolute;
+	bottom:-40px;
+	margin-left:-253px;
+	left:50%;
+	opacity:0.7;
+	-moz-opacity:0.7;
+	z-index:-10;
+}
+
+.box_standart .about {
+			display:none;
+			padding: 10px 5px; margin:0  0 0 0;
+			height:auto;
+			background-color: #FFA71F;
+			box-shadow: 0 0 5px black; /* Параметры тени */
+			box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+			-moz-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Firefox */
+			-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Для Safari и Chrome */
+			}
+.box_standart .about .line	{ padding:0 0; margin:0 20px; border-bottom:1px groove grey;  font-style:normal; color: white; font-size:12px; line-height:2em; }
+.table_order{
+	width: 100%;
+}
+.table_order table td {
+		text-align:center;
+		border:0px solid grey;
+		vertical-align:center;
+		height:70px;
+		}
+.head_text
+		{
+		font-size: 1.2em;
+		text-align:left!important;
+		font-weight:100;
+		text-shadow: grey 0 0 0px;
+		font-family: "Trebuchet MS", sans-serif;
+		color: #497CD0;
+		}
+.table_order select.field{
+		margin-left:-10px;
+		height:52px;
+		width:360px;
+}
+.table_order .field{
+		width:320px;
+		height:40px;
+		text-align:center;
+		font-style:bolder;
+		font-size:26px;
+		color:white;
+		background-color:#FFA71F;
+		border-radius:20px; -moz-border-radius:20px; -webkit-border-radius:20px;
+		padding: 5px 20px;
+		float:right;
+		margin: 10px auto;
+		}
+#taskdesc{
+	font-size:1em;
+	text-align:left;
+	height:50px;
+	margin-bottom: 0;
+	}
+#filefield{
+	margin-top: 0;
+}
+.rub-text{
+		position:relative;
+		color:white;
+		font-weight:bolder;
+		top: 10px;
+		left: 310px;
+		float: right;
+		}
+.tcalIcon{
+	float: right;
+	left: 330px;
+	top: 26px;
+	position: relative;
+}
+.order_box .mybutton, .center_box .mybutton{
+	margin: 20px auto auto -140px;
+	width:280px;
+	left: 50%;
+	position: relative;
+}
+.ui-autocomplete{
+  max-height: 300px;
+  overflow-y: auto;
+  /* отменим горизонтальный скролл */
+  overflow-x: hidden;
+  /* добавим padding для учета вертикального скролла */
+  padding-right: 20px;
+}
+/* В IE 6 не определено свойство max-height
+*  поэтому для него лучше установим постоянную высоту.
+*/
+* html .ui-autocomplete{
+  height: 300px;
+}
+.ui-menu li{
+	background: none;
+	font-size: 1.5em;
+	padding: 20px;
+	color: grey;
+	margin:4px;
+	border-radius: 4px;
+}
+.taskLoaded{
+  width:500px;
+  padding-top:0;
+  position: fixed;
+  left: 50%;
+  margin: -100px auto auto -250px;
+  top:50%;
+  display: none;
+  z-index: 10;
+}
+.box_display_block{
+	display: block;
+}
+.center_box{
+  width:500px;
+  padding-top:0;
+  position: fixed;
+  left: 50%;
+  margin: -100px auto auto -250px;
+  top:50%;
+  	z-index: 10;
+}
+.center_box .field{
+	width:320px;
+	height:40px;
+	text-align:center;
+	font-style:bolder;
+	font-size:26px;
+	color:white;
+	background-color:#FFA71F;
+	border-radius:20px; -moz-border-radius:20px; -webkit-border-radius:20px;
+	padding: 5px 20px;
+	margin: 10px auto;
+	position: relative;
+	display: block;
+}

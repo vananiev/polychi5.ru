@@ -1,0 +1,42 @@
+<?php /*
+		**************************************************************
+			Добавления запроса и первого вопроса в систему тикетов
+		**************************************************************
+		параметры POST:
+		thematic - тематика 'MONEY','HOW','OTHER'
+		headline - заглавие
+		mail - для не зарегистрированных пользователей
+		password - пароль доступа к тикету
+		text - текст вопроса
+		loadfile - прикрепляемый файл
+		*/
+		if(isset($_POST['thematic'])) $thematic = $_POST['thematic'];
+		if(isset($_POST['headline'])) $headline = $_POST['headline'];
+		if(isset($_POST['mail'])) $mail = $_POST['mail'];
+			else $mail = NULL;
+		if(isset($_POST['text'])) $post_text = $_POST['text'];
+		if(isset($_POST['password'])) $password = $_POST['password'];
+			else $password = '';
+		if(!isset($_FILES['loadfile'])) $_FILES['loadfile']=NULL;
+?>
+<?php
+		//все ли поля заполнены?	
+		if(isset($thematic) && isset($headline) && isset($post_text))
+			{
+			$ret = call_user_func($ticket->add, $thematic, $headline, $post_text, $_FILES['loadfile'], $mail, $password);
+			if(is_int($ret))
+				{
+				if($mail!=NULL) 
+					$args = "mail=".htmlspecialchars($mail,ENT_QUOTES);
+				else
+					$args = NULL;
+				$text = "Запрос добавлен.<br>
+				Номер запроса: {$ret}<br>".url('[ok]', 'TICKET', 'tickets', $args);
+				show_msg(NULL,$text,MSG_INFO,MSG_NO_BACK);
+				}
+			else
+				show_msg(NULL, $ret, MSG_WARNING);
+			}
+		else
+			show_msg(NULL, "Не верно составлен запрос. Заполните все поля.",MSG_WARNING);
+?>

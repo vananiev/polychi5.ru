@@ -1,0 +1,44 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+<?php
+	$_SESSION['from'] = ""; // возможно был установлен при предыдущей проверке, теперь он не нужен
+	if(isset($_POST['task_id'])){
+		global $task, $table_task;
+		$t = $task->db->row($table_task, (int)$_POST['task_id'], '*' );
+}?>
+<form name="loginform" action="" method="post">
+	<input class="field" type="text" name="task_id" id="task_number" value="<?php if(isset($_POST['task_id'])) echo $_POST['task_id'];?>" placeholder="Номер" autofocus>
+	<input class="field" type="submit" value="Проверить">
+</form>
+
+<?php if(isset($_POST['task_id'])){	?>
+	<h2>Результат проверки:</h2>
+	<div class="field">
+	<?php	
+	$solvers = unserialize($t['select_solver']);
+	if($t == null) echo 'Задание не найдено';	
+	elseif($t['status']=='SOLV' || $t['status']=='OK') echo 'Готов';
+	else echo 'Не готов'
+	?>	
+	</div>
+	<?php if($t != null){	?>
+	<div class="task">
+	<?php
+	$link = url(NULL, 'TASK', 'task', 'id='.$t['id']);
+	if($t == null) ;
+	elseif($t['status']=='SOLV' ||  $t['status']=='OK'){
+		echo url('Скачать', 'TASK', 'task', 'id='.$t['id']);	
+		//$_SESSION['from']="get_solving"; //прохождение системы защиты баланса от случайых снятий средств если направлять на get_solving
+	}
+	elseif($t['status']=="GETS" && isset($solvers[0][0])) echo url('Выбери решающего', 'TASK', 'task', 'id='.$t['id']);
+	else echo url('Редактор задания', 'TASK', 'task', 'id='.$t['id']);
+	?>
+	</div>
+<?php } } ?>
+
+</div></div>
+
+<?php require(MOBILE_ROOT."/footer.php");?>

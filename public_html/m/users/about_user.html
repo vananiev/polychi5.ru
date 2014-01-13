@@ -1,0 +1,46 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+<?php
+		/*********************************************************************
+						Сведения об ученике/решающем
+		*********************************************************************
+		Параметры GET:
+		user_id	- id пользователя
+		*/
+		if(isset($_GET['user_id']) && is_numeric($_GET['user_id'])) $user_id = (int)$_GET['user_id'];
+?>
+<?php
+	if(!isset($user_id))
+		{
+		show_msg(NULL,"Пользователь не найден.",MSG_WARNING,MSG_RETURN);
+		return;
+		}
+?>
+<h1><?php echo $URL['TITLE']; ?></h1>
+<?php
+	$usr = get_user($user_id);
+	if($usr==NULL)
+		echo "Такой пользователь не существует.";
+	else {
+?>
+<table class="price_table">
+	<tr><td>ID:</td><td><?php echo $usr['id']; ?></td></tr>
+	<tr><td>Имя:</td><td><?php echo $usr['name']; ?></td></tr>
+	<tr><td>Фамилия:</td><td><?php echo $usr['surname']; ?></td></tr>
+	<tr><td>Город:</td><td><?php echo $usr['city']; ?></td></tr>
+	<tr><td>Рейтинг:</td><td><?php echo $usr['rating']; ?></td></tr>
+	<tr><td>Зарегистрирован:</td><td><?php echo date("d M Y",strtotime($usr['reg_date'])); ?></td></tr>
+	<tr><td>Был в сети:</td><td><?php echo date("d M Y",strtotime($usr['last_visit'])); ?></td></tr>
+</table>
+
+<?php show_user_dialog($user_id); ?>
+
+<?php } ?>
+
+</div></div>
+
+<?php require(MOBILE_ROOT."/footer.php");?>

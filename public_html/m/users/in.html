@@ -1,0 +1,28 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require_once(MOBILE_ROOT.'/menu.php') ?>	
+
+<?php
+// переходим если перед входом запрашивали страницу
+if(isset($USER)){
+	if (isset($_SESSION['QUERY_STRING'])) { ?>
+		<script lang="Java">
+				<?php $s=$_SESSION['QUERY_STRING'];unset($_SESSION['QUERY_STRING']); ?>
+				location.href='<?php echo $s;?>';
+		</script>
+		<?php
+	}else{ ?>
+		<script lang="Java">location.href='/';</script>
+<?php } } ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+<form action="<?php echo url(NULL,'USERS','in')?>" method="post" >
+	<input type="text" name="login" id="user_login" class="field" placeholder="Логин" size="20">
+	<input type="password" name="password" id="user_pass" class="field" placeholder="Пароль" size="20">
+	<input class="field" type="submit" value="Войти">
+</form>
+<div style="width:180px; margin: 30px auto;">
+	<?php echo users_ulogin_panel(); ?>
+</div>	
+</div></div>
+<?php require_once(MOBILE_ROOT."/footer.php");?>

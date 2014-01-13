@@ -1,0 +1,11 @@
+# Запрет просмотра .htaccess .htpasswd
+<Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Доступ разрешен только к файлам
+<Files ~ ".*">
+	order allow,deny
+	allow from all
+</Files>

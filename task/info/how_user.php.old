@@ -1,0 +1,274 @@
+<h1><?php echo $URL['TITLE']; ?></h1>
+<div style='padding:0 0 100px 100px;'>
+<p class='info_text'>
+	<a href='#sending' onclick="return anchorScroller(this, 1000)">Отправка задания</a>
+</p>
+<p class='info_text'>
+	<a href='#waitting' onclick="return anchorScroller(this, 1000)">Порядок решения</a>
+</p>
+<p class='info_text'>
+	<?php echo url('Пошаговая инструкция', 'TASK', 'info/how_user_full');?>
+</p>
+</div>
+
+
+<a name='sending'></a>
+<h2>Отправка задания</h2>
+<p style="line-height: 150%">1. Переидите по ссылке <?php echo url('Заказать', 'TASK', 'add_task');?>
+;</p>
+<p style="line-height: 150%">2. Введите в полях &#39;<i>Категория</i>&#39; и &#39;<i>Подкатегория</i>&#39;, выберите предмет и раздел предмета задания; </p>
+<p style="line-height: 150%">3. Выберите способ решения задания: &quot;<span class="submenu">
+<a href="javascript:submenu('fast_start')">Быстрый старт</a></span>
+&quot; или &quot;<span class="submenu">
+	<a href="javascript:submenu('my_rools')">Игра по моим правилам</a></span >
+&quot; в пункте &#39;<i>Порядок 
+решения</i>&#39;. 
+</p>
+<p></p>
+<p></p>
+<p></p>
+	<div id='fast_start' class='box_standart' style='text-indent:0pt; display :none; width:700px;'>
+	<p style="line-height: 150%"><font color="#FF0000">&quot;Быстрый 
+	старт&quot;</font>: <i>обеспечивает <u>наименьшие затраты</u> 
+	времени</i></p>
+	<ul>
+		<li>
+		<p style="line-height: 150%">минимум времени пребывания 
+		на сайте. Вы лишь загружаете задание, и скачиваете решение;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">на момент заказа на вашем		
+		<a onclick="javascript:submenu('balance', 0)" href="#Баланс пользователя">балансе</a> должен 
+		быть хотя бы 1 рубль; </p>
+		</li>
+	</ul>
+	</div>
+	<div id='my_rools'  class='box_standart' style='text-indent:0pt;display:none;width:700px;'>
+	<p style="line-height: 150%"><font color="#FF0000">&quot;Игра по 
+	моим правилам&quot;</font>: <i>обеспечивает наибольшую <u>
+	функциональность</u></i></p>
+	<ul>
+		<li>
+		<p style="line-height: 150%">вы указываете 
+		предварительную <a href="#Price" onclick="return anchorScroller(this, 1000)">стоимость задания</a>;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">решающие назначют свою цену за решение задания (она может быть и меньше 
+		указанной Вами стоимости);</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">из списка предложивших свои услуги, Вы сами выберете автора, чья цена Вас 
+		устроит. На этот момент на вашем 		
+		<a onclick="javascript:submenu('balance', 0)" href="#Баланс пользователя">балансе</a>  
+		должен быть хотя бы 1 рубль;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">решение будет готово за указанный Вами <a href="#SolvTime" onclick="return anchorScroller(this, 1000)">срок</a>;</p>
+		</li>
+	</ul>
+	</div>
+<p style="line-height: 150%">4. <a name="Price"></a> 
+В поле &#39;<i>Стоимость</i>&#39; указываете 
+цену решения задания. Ознакомьтесь с 
+<?php echo url('ориентировочными ценами', 'INFO', 'price');?>
+.</p>
+<p style="line-height: 150%">5. <a name="SolvTime"></a>
+Укажите &#39;<i>Время на решение задания</i>&#39;, 
+указывайте время несколько меньшее, чем то через которое Вам необходимо получить 
+решение.
+	<!--div class='info_text' style='padding-left:30px;'>
+	И заметьте, что время на решение: для режима 
+	<i>&quot;Игра по моим правилам&quot;</i>
+	начинается <i>с момента выбора решающего</i>
+	(вы можете выбрать решающего в любой момент).
+	</div-->
+</p>
+
+
+<p style="line-height: 150%">6. Четко(!) укажите требования решения в отдельном файле(можно его назвать ReadMe.txt). Запакуйте файлы задания 
+в один файл архива Win-Rar (задания также принимаются в формате 
+.jpg, .txt).</p>
+<p style="line-height: 150%">7. В поле &#39;<i>Указать 
+задание</i>&#39;, выберите файл на Вашем компьютере</p>
+
+
+<br><br><br>
+<a name='waitting'></a>
+<h2>Порядок решения </h2>
+<p>Зависит от выбора способа решения:</p></p>
+<ul>
+	<li>
+		<div class="submenu">
+		<a href="javascript:submenu('fast_start1')">Быстрый старт</a></div>
+	<div id='fast_start1' style='text-indent:0pt; display:none'>
+	<p style="line-height: 150%"><font color="#FF0000">&quot;Быстрый 
+	старт&quot;</font>: <i>обеспечивает <u>наименьшие затраты</u> 
+	времени</i></p>
+	<ul>
+		<li>
+		<p style="line-height: 150%">после загрузки задание 
+		получает статус <font color="red">'Новый'</font>;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">задание примет статус
+		<font color="blue">'Идет решение'</font>, после 
+		того как Решающий согласится решить задание;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">задание примет статус
+		<font color="blue">'</font>Решен<font color="blue">'</font>, 
+		после того как Решающий выполнит задание;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">Вы 
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('скачиваете решение', 'TASK', 'info/how_task');
+			else
+				echo url('скачиваете решение', 'TASK', 'task');
+		?>
+		 на странице 
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации о задании', 'TASK', 'info/how_task');
+			else
+				echo url('информации о задании', 'TASK', 'task');
+		?> 
+		, для оплаты просто нажмите Скачать и Вы попадете на страницу 
+		подтверждения оплаты;  </p>
+		</li>
+		<li>
+		<p style="line-height: 150%">задание решено:</p>
+		</li>
+		<ul>
+		<li>
+		<p style="line-height: 150%"><font color="#0000FF">не 
+		верно</font> - в строке 'Оценки' 
+		на странице 
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации о задании', 'TASK', 'info/how_task');
+			else
+				echo url('информации о задании', 'TASK', 'task');
+		?>   
+		укажите 'Перерешать задание'. 
+		Задание переидет в состояние <font color="#CC0000"><b>'</b></font><font color="#cc0000"><b>Перерешать'</b></font> 
+		и Вы получите бесплатно перерешенное задание в течении 7 дней;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%"><font color="#0000FF">верно</font> 
+		- Вы 
+		можете оценить (можете не оценивать) решение на странице 
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации по заданию', 'TASK', 'info/how_task');
+			else
+				echo url('информации по заданию', 'TASK', 'task');
+		?> 
+		в строке <i>'Оценка';</i></p>
+		</li>
+		</ul>
+	</ul>
+	</div>
+	</li>
+	<li>
+	<div class="submenu">
+		<a href="javascript:submenu('my_rools1')">Игра по моим правилам</a></div>
+	<div id='my_rools1' style='text-indent:0pt;display:none'>
+	<p style="line-height: 150%"><font color="#FF0000">&quot;Игра по 
+	моим правилам&quot;</font>: <i>обеспечивает наибольшую <u>
+	функциональность</u></i></p>
+	<ul>
+		<li>
+		<p style="line-height: 150%">после загрузки задание 
+		получает статус <font color="red">'</font><font color="#ff0066">Мои 
+		правила</font><font color="red">'</font>;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">задание примет статус
+		<font color="blue">'Идет решение'</font>, после 
+		того как Вы выберите решающего. Для этого переидите на страницу
+				<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации о задании', 'TASK', 'info/how_task');
+			else
+				echo url('информации о задании', 'TASK', 'task');
+		?>  и укажите Решающего в 
+		строке 'Решающий';</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">задание примет статус
+		<font color="blue">'</font>Решен<font color="blue">'</font>, 
+		после того как Решающий выполнит задание;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%">Вы
+				<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('скачиваете решение', 'TASK', 'info/how_task');
+			else
+				echo url('скачиваете решение', 'TASK', 'task');
+		?>  на странице
+				<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации о задании', 'TASK', 'info/how_task');
+			else
+				echo url('информации о задании', 'TASK', 'task');
+		?> , 
+		для оплаты просто нажмите Скачать и Вы попадете на страницу 
+		подтверждения оплаты;
+		 </p>
+		</li>
+		<li>
+		<p style="line-height: 150%">задание решено:</p>
+		<ul>
+		<li>
+		<p style="line-height: 150%"><font color="#0000FF">не 
+		верно</font> - в строке 'Оценки' 
+		на странице 
+				<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации о задании', 'TASK', 'info/how_task');
+			else
+				echo url('информации о задании', 'TASK', 'task');
+		?>   
+		укажите 'Перерешать задание'. 
+		Задание переидет в состояние <font color="#CC0000"><b>'</b></font><font color="#cc0000"><b>Перерешать'</b></font> 
+		и Вы получите бесплатно перерешенное задание в течении 7 дней;</p>
+		</li>
+		<li>
+		<p style="line-height: 150%"><font color="#0000FF">верно</font> 
+		- Вы 
+		можете оценить (можете не оценивать) решение на странице 
+				<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('информации о задании', 'TASK', 'info/how_task');
+			else
+				echo url('информации о задании', 'TASK', 'task');
+		?> 
+		в строке <i>'Оценка';</i></p>
+		</li>
+		</ul>
+		</li>
+	</ul>
+	</div>
+	</li>
+</ul>
+	
+ 
+
+<p><font face="Bitstream Vera Sans Mono">
+Мы гарантируем 
+полное соблюдение Ваших интересов, и рассматриваем все Ваши вопросы.
+<span style="letter-spacing: 1px">Пожалуйста, ознакомьтесь с
+<?php echo url('Нашими Гарантиями', 'INFO', 'guarantee');?>.</font></span></p>
+
+<?php
+	$rel = url('Баланс', 'TASK', 'get_balance', '', '', "target='_blank'");
+	show_msg(NULL,
+		"Ваш \"электронный кошелек\" в системе.<br>
+		Баланс пополняется в меню ".$rel.".<br> 
+		Просто укажите сумму и перейдите к оплате.<br>
+		Все суммы указаны в рублях.",
+		MSG_INFO,MSG_NO_BACK,MSG_HIDDEN,"id='balance'");
+?>

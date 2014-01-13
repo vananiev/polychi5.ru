@@ -1,0 +1,1 @@
+<?php include('how_non_reg_user.php'); ?>

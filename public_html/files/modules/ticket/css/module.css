@@ -1,0 +1,83 @@
+.tkt_blockname { color:grey; font: normal 1em; margin:20px; border-bottom: 1px groove gray; }
+.tkt_blockcontent{ border: 1px solid grey; border-radius:5px; background: #FEFEFE; box-shadow: 0 0 10px rgba(55, 55, 55, 0.5); height:auto;}
+
+.tkt_incon{
+	margin: 10px 0 10px 10% ;
+	padding:8px;
+	width:30%;
+	float:left;
+	box-shadow: 0 0 10px rgba(100, 100, 100, 0.5);
+	}
+.tkt_incon img { width:64px; height:64px; margin: 12px 32px; float:left;}
+.tkt_incon  h3	a{ margin: 16px 0 8px 0; padding:0; font: bold; text-align:left; color: grey; text-transform:uppercase; text-decoration: none;}
+.tkt_incon  a	{ text-decoration: none; }
+.tkt_incon  .tkt_modinfo { color:grey; font-size:0.9em; line-height:1em;}
+
+.admin_buttons	{position:absolute;top:25px;right:5px;margin:0px;font-size:0.7em; display:none;}
+.tr_dialog:hover .admin_buttons{display:block;}
+.user_buttons	{position:absolute;bottom:0px;right:0px; margin:0px; font-size:0.7em; display:none; }
+.user_buttons a {color:grey; }
+.tr_dialog:hover .user_buttons {display:block;}
+.table_dialog {
+			width:96%;
+			width=96%;
+			max-width: 1200px;
+			padding: 0;
+			margin: 0 auto;
+			border-spacing: 0 20px; border-collapse: separate;
+			}
+table .td_who{
+			margin:30px 0 0 0;
+			padding: 10px;
+			border: 1px solid grey;
+			text-align:left;
+			width: 250px;;
+			}
+.table_dialog .td_content {
+			padding:10px; margin:0;
+			border: 1px solid grey;
+			border-left: none;
+			text-align:left;
+			vertical-align:top;
+			font-size:0.9em;
+			line-height:1.5em;
+			}
+.table_dialog td  {
+			border:1px solid grey;
+			}
+.attached	{
+			color:blue;
+			border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; font-size:10px; font-weight:bolder; padding:2px ;background-color:#EEE;
+			border:1px solid white;
+			margin:10px 1px 1px 50px;
+			width:140px;
+			text-align:center;
+			}
+
+
+.table_dialog blockquote {
+			border: 1px solid #e9e9e9;
+			background:#f9f9f9;
+			border-left:10px solid #ccc;
+			margin:0.7em 10px;
+			padding:.5em 10px;
+			quotes:"\201c" "\201d";
+			}
+
+.table_dialog blockquote:before {
+		color:gray;
+		content:open-quote;
+		font-size:4em;
+		line-height:.1em;
+		margin-right:.25em;
+		vertical-align:-.4em;
+		}
+
+.press {
+		background: #222;
+		color: #555; 
+		box-shadow: inset 0px 2px 3px #555;
+		-webkit-box-shadow: inset 0px 2px 3px #555;
+		-moz-box-shadow: inset  0px 2px 3px #555;
+		}
+

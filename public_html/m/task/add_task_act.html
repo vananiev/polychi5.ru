@@ -1,0 +1,23 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+<?php
+if(isset($URL['RESULT']) && $URL['RESULT'] !== true ) {
+  show_msg("Ошибка", $URL['RESULT'], MSG_WARNING, MSG_RETURN);
+}
+?>
+<div>
+  <h2>Задание загружено</h2>
+  <p>
+    Номер заказа: <?php echo $URL['NEW_TASK_ID'];?>
+  </p>
+  <p>
+      Проверить статус заказа вы всегда сможете по его номеру. Для этого перейдите в главном меню по ссылке <?php echo url('Проверить заказ','TASK','check');?>
+  </p>
+</div>
+</div></div>
+
+<?php require(MOBILE_ROOT."/footer.php");?>

@@ -1,0 +1,96 @@
+commit d85678eab1d496880dc822b040b43025277270d0
+Author: vitek <an-vitek@ya.ru>
+Date:   Wed Oct 15 01:53:20 2014 +0400
+
+    version 1.1
+    - rm ticket oriented support system
+    - add Netrox SC suport system
+    - footer theme and  get_balance form changed
+    - Yandex.Money module rewritten by more simple pay procedure (without API tokens)
+
+commit 47d0f04dadfb25581e44d070fb10f09d538c289d
+Author: vitek <an-vitek@ya.ru>
+Date:   Tue Aug 5 01:40:44 2014 +0400
+
+    - canche home page
+    - add animation function css and js libs
+
+commit 8c288557174ee3145b96da13cf1f15ef27fd9c62
+Author: vitek <an-vitek@ya.ru>
+Date:   Sun Aug 3 23:53:50 2014 +0400
+
+    - add Yandex.Metrika counter
+
+commit 21e658fdd9f841eda2ac44340bf5ef0fdda8c7a8
+Author: vitek <an-vitek@ya.ru>
+Date:   Sun Aug 3 18:25:56 2014 +0400
+
+    - multi login
+    - wp polychi5 plugin bug fix
+
+commit 56c6bc73333683c3f3883768ac34442eb35dcee3
+Author: vitek <an-vitek@ya.ru>
+Date:   Fri Jul 4 22:28:29 2014 +0400
+
+    - added multi login (login from multiply browsers)
+    - bug  fix: wp plugin 'polychi5' fix soft_login at each page refresh
+
+commit 7e7914b0c64ba111e6d1403d35b73a8cda3b6776
+Author: Виталий <vitek@server.Dlink>
+Date:   Thu Jun 19 22:03:42 2014 +0400
+
+    - Add MAIL_DOMAIN in config.php
+    - Change index.php
+
+commit c45e8655ca0d796b14a584a3cbf54399fca6c1df
+Author: Виталий <vitek@server.Dlink>
+Date:   Sun Mar 9 14:49:30 2014 +0400
+
+    - change background-color of index page
+    - add define MAIL_DOMAIN = polychi5.ru
+    - remove promo image from index page
+
+commit 71f32657a101fbfbd09d5617c7295eafa9051ec5
+Author: Виталий <vitek@server.Dlink>
+Date:   Thu Mar 6 20:39:50 2014 +0400
+
+    - max-width for order form
+
+commit d50e6721058008b59dd46735959f847ecf5c4946
+Author: Виталий <vitek@server.Dlink>
+Date:   Thu Mar 6 18:45:50 2014 +0400
+
+    - fixed bug in footer (mail-adress for russian domain)
+    - index page now contain promo image
+    - add yandex verification code for получи5.рф in 'public_html/index.php'
+
+commit 22b419c9cd116d33bd83d9b0fdc6a31ed54318e3
+Author: vitek <vitek@vitek.home>
+Date:   Tue Feb 4 21:19:34 2014 +0400
+
+    1.0.4
+    - add solver_info button on task page then selecting solver
+    - added about_user page in mobile version
+    - added yandex widget for yandex.browser
+    - bug fix for cookie login
+
+commit 9d61ed2cc57bb2ce7b0ce1cc07038fc0b3cf45f0
+Author: vitek <vitek@vitek.home>
+Date:   Sat Feb 1 23:47:46 2014 +0400
+
+    1.0.3
+    Added Authors ratings depend on the avarage task mark, number of solved task and avarage solved task price
+    Users rating = number of payed task
+
+commit bb636abfc6a939e0fe14487fd24420619da0a08c
+Author: vitek <vitek@vitek.home>
+Date:   Fri Jan 31 00:11:05 2014 +0400
+
+    1.0.2
+    Added comment under user passport profile
+
+commit 79718f38a482f48ce0d6c34f1571a1277cf53f74
+Author: vitek <vitek@vitek.home>
+Date:   Tue Jan 28 21:39:41 2014 +0400
+
+    version 1.1

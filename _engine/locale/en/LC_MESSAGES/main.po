@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Получи[5]\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-24 18:37+0400\n"
+"PO-Revision-Date: 2012-01-24 18:46+0400\n"
+"Last-Translator: Vitali Ananiev <an-vitek@yandex.ru>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;gettext;gettext_noop;$_;_\n"
+"X-Poedit-Basepath: \\\\Cova\\html\\polychi5.ru\\\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: \\\\Cova\\html\\polychi5.ru\n"
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:191
+msgid "Не верный адресат"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:206
+msgid "Вы не указали правильную почту для обратной связи и/или пароль доступа к запросу"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:274
+msgid "Не верный номер тикета"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:275
+msgid "Не верный номер вопроса"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:276
+msgid "Не верно составлен запрос. Заполните корректно поля."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:291
+msgid "Вы не указали e-mail для обратной связи."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:302
+msgid "Размер файла превышает"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:307
+msgid "Возникла ошибка при загрузке файла. Проверьте интернет соединение."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:310
+msgid "Ошибка. Разрешены только файлы Win-Rar (.rar)."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:327
+msgid "У вас нет прав на редактирование"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:374
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:672
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:753
+msgid "У вас нет доступа"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:375
+msgid "Не определенная ошибка"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:397
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:683
+msgid "Тикет не найден"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/ticket/kernel/function.php:485
+msgid "У Вас нет прав на просмотр тикетов"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/_engine/kernel/data.php:28
+msgid "Не определено место хранения данных"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/_engine/kernel/storage_mysql.php:283
+msgid "3-ий параметр должен быть массивом"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/admin/edit_group.php:98
+#: \\Cova\html\polychi5.ru/users/admin/edit_group.php:106
+msgid "редактировать"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/access.php:78
+msgid "You are not have rights!"
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/access.php:101
+msgid "You are not have rights! Relogin."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/access.php:109
+msgid "You are not have rights! You must relogin."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/access.php:120
+msgid "You are not have rights! Please, relogin."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:75
+msgid "Группа не существует: "
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:89
+msgid "Не найдено меню с именем: "
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:610
+msgid "Этот логин занят. Введите другой и попробуйте еще раз."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:623
+msgid "Ошибка при регистрации: "
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:629
+msgid "Введите логин и пароль."
+msgstr ""
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:639
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:678
+msgid "Такой логин и паролем не найдены"
+msgstr "This username and password are not found"
+
+#: \\Cova\html\polychi5.ru/users/kernel/module.php:642
+msgid "Не верен логин или пароль"
+msgstr ""
+

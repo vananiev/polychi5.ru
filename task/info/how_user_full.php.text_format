@@ -1,0 +1,352 @@
+<h1><?php echo $URL['TITLE']; ?></h1>
+<script type="text/javascript" src="<?php echo JS_ROOT_REL?>/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo JS_ROOT_REL?>/jquery.easing.1.3.js"></script>
+<p style="text-align:right; width:100%;"><font style="font-size: 15pt;font-style:normal;" color="grey">Ваше решение в 3 простых шага</font></p>
+<p>Кликните по боксу...</p>
+	<div align="center">
+
+	<div id='position_1' class="for_user_full_box box_standart" onclick="
+											var obj=document.getElementById('wait');
+											obj.style.display='none';
+											var obj=document.getElementById('get_sol');
+											obj.style.display='none';
+											submenu('send');
+											">
+		<p class='action_number'>
+		<a name="3">1</a><p>
+		<p class='action_name'>Отправьте задание</p>
+	</div>
+	<div id='position_2' class="for_user_full_box box_standart" onclick="var obj=document.getElementById('send');
+											obj.style.display='none';
+											var obj=document.getElementById('get_sol');
+											obj.style.display='none';
+											submenu('wait');">
+		<p class='action_number'>
+		<a name="4">2</a></p><p  class='action_name'>Подождите...
+		</p>
+	</div>
+	<div id='position_3' class="for_user_full_box box_standart" onclick="
+											var obj=document.getElementById('wait');
+											obj.style.display='none';
+											var obj=document.getElementById('send');
+											obj.style.display='none';
+											submenu('get_sol');">
+		<p class='action_number'>
+		<a name="5">3</a></p><p  class='action_name'> Получите решение
+		</p>
+	</div>
+
+	</div>
+	<div style="clear:both;"></div>
+<div id='send' style='display:none;clear:both; height:auto;'>
+<blockquote>
+<p>1) перейдите по ссылке <?php echo url('Заказать', 'TASK', 'add_task', NULL, NULL, "target='_blank'");?>;</p>
+<?php if(!isset($_SESSION['user_id'])){?>
+<p>2) если Вы не вошли в систему, введите <i>'Логин'</i> и <i>'Пароль'.</i></p>
+<?php } ?>
+</blockquote>
+	<p style="line-height: 150%" align="center">
+		<img style='border:none;' src="<?php echo media_dir(); if(isset($_SESSION['user_id'])) echo '/how_send_task.png'; else echo '/how_send_task_non_reg.png';?>" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px">
+	</p>
+	<blockquote>
+	<?php if(isset($_SESSION['user_id'])){ ?>
+		<p style="line-height: 150%">3) в полях &#39;<i>Категория</i>&#39;
+	и &#39;<i>Подкатегория</i>&#39;, выберите предмет
+	и раздел предмета задания; </p>
+		<p style="line-height: 150%">4) Выберите способ решения задания: &quot;<span class="submenu">
+		<a href="javascript:submenu('fast_start')">Быстрый старт</a></span>
+	&quot; или &quot;<span class="submenu">
+		<a href="javascript:submenu('my_rools')">Игра по моим правилам</a></span >
+		&quot; в пункте &#39;<i>Порядок
+	решения</i>&#39;.
+	</p>
+		<p></p>
+		<p></p>
+		<p></p>
+		<div id='fast_start' class='box_standart' style='text-indent:0pt; display :none; width:700px;'>
+			<p style="line-height: 150%">&quot;Быстрый
+		старт&quot;: <i>обеспечивает <u>наименьшие затраты</u>
+		времени</i></p>
+			<ul>
+				<li>
+				<p style="line-height: 150%">минимум времени пребывания
+			на сайте. Вы лишь загружаете задание, и скачиваете решение;</p></li>
+				<li>
+				<p style="line-height: 150%">на момент заказа на вашем
+				<a onclick="javascript:submenu('balance',0)" href="#_balance">балансе</a> должен
+			быть хотя бы 1 рубль; </p></li>
+			</ul>
+		</div>
+		<div id='my_rools' class='box_standart' style='text-indent:0pt; display :none; width:700px;'>
+			<p style="line-height: 150%">&quot;Игра по
+		моим правилам&quot;: <i>обеспечивает наибольшую <u>функциональность</u></i></p>
+			<ul>
+				<li>
+				<p style="line-height: 150%">вы указываете
+			предварительную <a href="#Стоимость">стоимость задания</a>;</p></li>
+				<li>
+				<p style="line-height: 150%">решающие ознакомятся с Вашим
+			заданием, и назначат свою цену за решение задания (она может быть и меньше
+			указанной Вами стоимости);</p></li>
+				<li>
+				<p style="line-height: 150%">из списка предложивших свои услуги, Вы выбераете решающего, чья цена Вас
+			устроит. На этот момент на вашем
+				<a onclick="javascript:submenu('balance',0)" href="#_balance">балансе</a>
+			должен быть хотя бы 1 рубль;</p></li>
+				<li>
+				<p style="line-height: 150%">решение будет готово за указанный Вами <a href="#Время решения">срок</a>;</p>
+				</li>
+			</ul>
+		</div>
+		<?php } ?>
+		<p style="line-height: 150%">5) <a name="Стоимость"></a>Далее в
+	поле &#39;<i>Стоимость</i>&#39; указываете
+	цену решения задания. Ознакомьтесь с <?php echo url('ориентировочными ценами', 'INFO', 'price', NULL, NULL, "target='_blank'");?>.</p>
+
+		<p style="line-height: 150%">6) <a name="Время решения"></a>'<i>Время на решение</i>&#39;
+		- &nbsp;указывайте время несколько меньшее, того через которое Вам необходимо получить
+	решение;</p>
+		<p style="line-height: 150%">7) Укажите требования решения в отдельном файле (можно его назвать ReadMe.txt). Запакуйте файлы задания
+	в один файл архива Win-Rar (задания также принимаются в формате .jpg, .txt).</p>
+
+		<p style="line-height: 150%">8) В поле &#39;<i>Указать
+	задание</i>&#39;, выберите файл на Вашем компьютере;</p>
+
+		<p style="line-height: 150%">9) автоматически Ваше задание добавляется в главное меню '
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('Мои задания', 'TASK', 'info/how_tasks', NULL, NULL, "target='_blank'");
+			else if(user_in_group('USER'))
+				echo url('Мои задания', 'TASK', 'tasks', 'user='.$_SESSION['user_id'], NULL, "target='_blank'");
+		?>
+		';</p>
+		<p style="line-height: 150%" align="center">
+		<img style="border-style: none; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   src="<?php echo media_dir();?>/add_task_form.png"></p>
+		<p style="line-height: 150%" align="center">
+	<a style="cursor:pointer;" onmouseup="javascript:submenu('send');" >Свернуть</a></p>
+	</blockquote>
+</div>
+
+<div id='wait' style='display:none'>
+		<blockquote>
+			1) периодически посещайте страницу '
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('Мои задания', 'TASK', 'info/how_tasks', NULL, NULL, "target='_blank'");
+			else if(user_in_group('USER'))
+				echo url('Мои задания', 'TASK', 'tasks', 'user='.$_SESSION['user_id'], NULL, "target='_blank'");
+		?>
+		', если вы не указали почту при регистрации, чтобы узнать готово ли ваше решение (если Вы указали почту мы пришлем оповещение)
+		</blockquote>
+		<p style="line-height: 150%" align="center">
+			&nbsp;<img style="border-style: none; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/add_task_form.png"></p>
+		<blockquote>
+			2) просмотрите столбец 'Состояние' у задания с
+			<a onmouseup="javascript:submenu('nomer',0);" style="cursor:pointer; text-decoration:underline" href="#_nomer">номером</a>, который Вы получили при
+			отправке задания:
+			<ul>
+				<li>
+					<font color="#0000FF">Мой правила</font>
+					- в столбце 'Решающий'
+					щелкните по ссылке '<a name="выберите_Решающего" style="cursor:pointer; text-decoration:underline"  onmouseup="javascript:submenu('sel_solv')">Выбрать решающего</a>'
+
+					<div id='sel_solv' style='display:none'>
+					<div class='info_text'>В строке '<i>Решающий</i>'
+					выберите из выпадающего списка выберите Решающего, чья
+					цена Вас устроит, и&nbsp; нажмите по кнопке '<i>Выбрать
+					решающего</i>'.
+					После этого он приступит к выполнению задания.
+					Если нет предложений от решающих после перехода
+					по ссылке вы получите на данной странице уведомление в виде окна.
+					</div>
+					<p style="line-height: 150%" align="center">
+					<img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/sel_solv.jpg" width="821" height="477">
+					</p>
+					<p style="line-height: 150%" align="center">
+					<a style="cursor:pointer;" onmouseup="javascript:submenu('sel_solv');" href="#выберите_Решающего">Свернуть</a></p>
+					</div>
+				</li>
+				<li><font color="#0000FF">Новый</font> - за решение
+					задания никто еще не взялся - необходимо подождать (обычно не более 1
+					суток);
+				</li>
+				<li><font color="#0000FF">Идет решение</font> - задание
+					решается, необходимо подождать;</li>
+				<li><font color="#0000FF">Решен</font> - задание готово к
+					скачиванию решения;
+				</li>
+			</ul>
+			<blockquote>
+				Совет: в настройках профиля Вы можете указать свой e-mail или сотовый. Тогда мы сможем Вас уведомить по почте или с помощью смс, когда Ваше решение будет готово.
+			</blockquote>
+			<p align="center">
+			<a style="cursor:pointer;" onmouseup="javascript:submenu('wait');" href="#4">Свернуть</a></p>
+		</blockquote>
+</div>
+<div id='get_sol' style='display:none'>
+	<blockquote>
+		1) После того как задание перейдет в состояние 'Решен', щелкните по номеру задания на странице &nbsp;
+		<?php
+			if(!isset($_SESSION['user_id']))
+				echo url('Мои задания', 'TASK', 'info/how_tasks', NULL, NULL, "target='_blank'");
+			else if(user_in_group('USER'))
+				echo url('Мои задания', 'TASK', 'tasks', 'user='.$_SESSION['user_id'], NULL, "target='_blank'");
+		?>
+		<img style="border-style: none; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/add_task_form.png"></p>
+	</blockquote>
+	<blockquote>
+		и для получения решения нажмите по ссылке '<i>Скачать</i>':
+	</blockquote>
+	<p align="center">
+	<img border="0" style="border-style: none; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/task_solv.png" ></p>
+	<blockquote>
+		<p>2) если на Вашем балансе не достаточно средств, Вы
+	попадете на страницу '<i>Оплаты решения</i>':</p>
+		<ul>
+			<li>
+			<p align="left">если Вы имеете
+			Yandex кошелек, выберите
+			- '<i>Оплатить с помощью
+			Яндекс.Деньги</i>'.
+			</p></li>
+			<li>
+			<p align="left">если Вы имеете
+			WebMoney кошелек, выберите
+			- '<i>Оплатить с помощью
+			WebMoney кипера</i>'.
+			</p></li>
+			<li>
+			<p align="left">много способов оплаты предоставляет
+			Робокасса, для оплаты нажмите
+			- '<i>Оплатить с помощью
+			Робокасса</i>'.
+			</p></li>
+			<li>
+			<p align="left">если у Вас нет WebMoney
+			кошелька, узнайте
+			<?php echo url('как оплатить через терминал', 'WEBMONEY', 'info/terminal', NULL, NULL, "target='_blank'");	?>
+			, выполните оплату в терминале, затем введите '<i>Номер мобильного счета</i>', '<i>Пароль от мобильного счета</i>' (пароль
+			Вы получите в СМС после оплаты в терминале) и нажмите
+			'<i>Оплатить через терминал</i>'.</p>
+			</li>
+		</ul>
+		<p>&nbsp;</p>
+	</blockquote>
+	<p align="center">
+	<img style="border-style: none; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"  src="<?php echo media_dir();?>/oplata_resheniya.png"></p>
+	<blockquote>
+		<p align="left">3) далее Вы попадете на страницу подтверждения платежа. Нажмите оплатить,
+	если Вы согласны:</p>
+	</blockquote>
+	<p align="center">
+	<img border="0" style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/podtverzhdenie_platezha.png"></p>
+	<blockquote>
+		<p>4) Вы попадете на страницу оплаты, если Вы оплачиваете через:</p>
+		<ul>
+			<li><a style="cursor:pointer; text-decoration:underline" onmouseup="javascript:submenu('yandex');" name="yandex.money">Яндекс.Денег</a>
+			 авторизуйтесь на сайте Яндекса и подвердите оплату</li>
+		</ul>
+		</blockquote>
+		<div id='yandex' style='display:none'>
+			<p align="center">
+			<img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir('YANDEX_MONEY');?>/how_pay_1.png"></p>
+			<p align="center">
+			<a style="cursor:pointer;" onmouseup="javascript:submenu('yandex');" href="#yandex.money">Свернуть</a></p>
+		</div>
+		<blockquote>
+		<ul>
+			<li>WebMoney
+			<a style="cursor:pointer; text-decoration:underline" onmouseup="javascript:submenu('kiper');" name="кипера">кипера</a>,введите код c картинки и нажмите платеж подтверждаю</li>
+		</ul>
+	   </blockquote>
+		<div id='kiper' style='display:none'>
+			<p align="center">
+			<img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/oplata_kiper.png" width="357" height="461"><img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/oplata_kiper_podtver.png" width="569" height="460"></p>
+			<p align="center">
+			<a style="cursor:pointer;" onmouseup="javascript:submenu('kiper');" href="#кипера">Свернуть</a></p>
+		</div>
+		<blockquote>
+		<ul>
+			<li><a style="cursor:pointer; text-decoration:underline" onmouseup="javascript:submenu('robokassa');" name="robokassaref">Робокассу</a>
+			 авторизуйтесь на сайте Робокассы, выберите способ оплаты и выполните оплату</li>
+		</ul>
+		</blockquote>
+		<div id='robokassa' style='display:none'>
+			<p align="center">
+			<img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir('ROBOKASSA');?>/how_pay_1.png"></p>
+			<p align="center">
+			<a style="cursor:pointer;" onmouseup="javascript:submenu('robokassa');" href="#robokassaref">Свернуть</a></p>
+		</div>
+		<blockquote>
+		<ul>
+			<li><a style="cursor:pointer; text-decoration:underline" onmouseup="javascript:submenu('term');" name="терминал">терминал</a>,
+		дождитесь СМС с кодом и введите его. Нажмите платеж подтверждаю.</li>
+		</ul>
+	</blockquote>
+		<div id='term' style='display:none'>
+			<p align="center">
+			<img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/check_13.png" width="550" height="540"><img border="0" style="border-style: solid; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   border="0" src="<?php echo media_dir();?>/check_14.png" width="537" height="541"></p>
+			<p align="center">
+			<a style="cursor:pointer;" onmouseup="javascript:submenu('term');" href="#терминал">Свернуть</a></p>
+		</div>
+	<blockquote>
+		<p>6) перед снятием денег с Вашего баланса система спросит у Вас
+	подтверждения, нажмите продолжить для получения решения:</p>
+	</blockquote>
+	<p align="center">
+	<img style="border-style: none; border-width: 0px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px"   src="<?php echo media_dir();?>/polychenie_ssilki_na_reshenie.png"></p>
+	<blockquote>
+		<p>7) Начинается загрузка решения через броузер.</p>
+	</blockquote>
+	<p align="center">
+	<a style="cursor:pointer;" onmouseup="javascript:submenu('get_sol');" href="#5">Свернуть</a>
+	</p>
+</div>
+<?php
+	$rel = url("Баланс", 'TASK', 'get_balance', NULL, NULL, "target='_blank'");
+	show_MSG(NULL,
+		"Ваш \"электронный кошелек\" в системе.<br>
+		Баланс пополняется в меню ".$rel.".<br>
+		Просто укажите сумму и перейдите к оплате.<br>
+		Все суммы указаны в рублях.",
+		MSG_INFO,MSG_NO_BACK,MSG_HIDDEN,"id='balance'");
+	//сообщения
+	$rel = url('Вашего задания', 'TASK', 'task', NULL, NULL, "target='blank'");
+	show_msg("<a name='_nomer'></a>Номер задания","Номер автоматически присваиваемый Вашему заданию, по нему Вы скачиваете решение со страницы ".$rel ,MSG_HELP,MSG_NO_BACK,MSG_HIDDEN,"id='nomer'");
+?>
+<style type="text/css">
+	.for_user_full_box
+			{
+			position:relative;
+			height:100px;
+			float:left;
+			width:25%;
+			margin:2% 3%;
+			padding:1.5% 0;
+			cursor:pointer;
+			background-color: #FFA71F;
+			border:1px solid #9FDAEE;
+			overflow:hidden;
+			font-size:20px;
+			top:-700px;
+			}
+	.for_user_full_box:hover
+			{
+			font-size:22px;
+			box-shadow: 0 0 5px black; /* Параметры тени */
+			box-shadow: 0 0 10px rgba(255,220,0,0.8); /* Параметры тени */
+			-moz-box-shadow: 0 0 10px rgba(255,220,0,0.8); /* Для Firefox */
+			-webkit-box-shadow: 0 0 10px rgba(255,220,0,0.8); /* Для Safari и Chrome */
+			}
+	.for_user_full_box p { text-align:center; font-weight:bold;  width:100%; margin:0;}
+	.action_number a {  font-size: 2.5em;  line-height:60px; height: 20px; color:yellow; font-family: "Lucida Sans","Lucida Grande","Lucida Sans Unicode",sans-serif;}
+	.action_number { font-weight: bold;  border-bottom:1px solid #F4FAFC; background-color: #9FDAEE;}
+	.action_name  { font-weight: normal; font-family:"Comic Sans MS"; color:#F4FAFC; height:30px; padding-top:5px;  font-size:1em; background-color: #9FDAEE;}
+</style>
+<script type="text/javascript">
+	jQuery.easing.def = "easeOutBounce";
+	$('#position_1').animate({top:0}, 2000, "easeOutBounce");
+	setInterval(function() { $('#position_2').animate({top:0}, 2000, "easeOutBounce");; }, 700 );
+	setInterval(function() { $('#position_3').animate({top:0}, 2000, "easeOutBounce");; }, 1400 );
+
+</script>

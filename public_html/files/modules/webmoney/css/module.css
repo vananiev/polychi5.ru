@@ -1,0 +1,14 @@
+.webmoney_blockname { color:grey; font: normal 1em; margin:20px; border-bottom: 1px groove gray; }
+.webmoney_blockcontent{ border: 1px solid grey; border-radius:5px; background: #FEFEFE; box-shadow: 0 0 10px rgba(55, 55, 55, 0.5); height:auto;}
+
+.webmoney_incon{
+	margin: 10px 0 10px 10% ;
+	padding:8px;
+	width:30%;
+	float:left;
+	box-shadow: 0 0 10px rgba(100, 100, 100, 0.5);
+	}
+.webmoney_incon img { width:64px; height:64px; margin: 12px 32px; float:left;}
+.webmoney_incon  h3	a{ margin: 16px 0 8px 0; padding:0; font: bold; text-align:left; color: grey; text-transform:uppercase; text-decoration: none;}
+.webmoney_incon  a	{ text-decoration: none; }
+.webmoney_incon  .webmoney_modinfo { color:grey; font-size:0.9em; line-height:1em;}

@@ -1,0 +1,108 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+<?php
+	global $task, $table_task;
+	$tasks = $task->db->query("SELECT id from $table_task where user=")
+
+?>
+
+
+<?php
+		/********************************************************************
+						Выдача таблицы заданий
+
+		Параметры GET:
+		user  - номер пользователя
+		solver - номер решающего
+		status == "NEW\" or status=\"GETS" - выдача результатов по статусу
+		status - выдача результатов по статусу
+		sortby - сортировать по
+		
+		POST:
+		status - выдача результатов по статусу
+		********************************************************************/
+		if(isset($_GET['user']) && is_numeric($_GET['user'])) $user = (int)$_GET['user'];
+		if(isset($_GET['solver']) && is_numeric($_GET['solver'])) $solver = (int)$_GET['solver'];
+		if(isset($_POST['status'])) { $_GET['status'] = $_POST['status']; $URL['ARGS']=add_arg('status='.$_POST['status']);}
+		if(isset($_GET['status'])) $post_status = $_GET['status']; else $status = NULL;
+?>
+<?php
+	if(!isset($_SESSION['user_id'])) 
+		{
+		$rel = url('войдите','USERS','in');
+		echo '<p>Пожалуйса, '.$rel.' в систему</p>';
+		return;
+		}
+?>
+
+<?php
+	//Если это решающий просматривает какие задания решать
+	if( user_in_group('SOLVER')  && isset($_GET['status']) && ($_GET['status']=="NEW' or status='GETS" || $_GET['status']=="NEW\" or status=\"GETS"))
+			{
+			$post_status='new_for_solver';
+			unset($solver);	//запрещаем просмотр от имени других решающих
+			}
+	else if( !check_right('TSK_SEE_OTHERS_TASK')) //можно просматривать только свои задания
+		{
+		if(
+			(isset($user) && $user!=$_SESSION['user_id']) || 
+			(isset($solver) && $solver!=$_SESSION['user_id'])
+	        	)
+			{
+			echo "<p>Можно просматривать только свои задания</p>";
+			return;
+			}
+		//если не указан ни user ни solver и это 
+		if(!(isset($user) && !isset($solver)))
+			if(user_in_group('SOLVER'))
+				$solver = $_SESSION['user_id'];	
+			else if(isset($_SESSION['user_id']))
+				$user = $_SESSION['user_id'];
+		}
+?>
+<?php
+	$on_page = 2000;	//число сток в таблице
+
+	$query="select id,section FROM `%s`";
+	$vars = array($table_task);
+	if(isset($user) || isset($solver) || (isset($post_status) && $post_status!="-1"))
+    	$query.=" WHERE ";
+	if(isset($user))
+            {$query.=" user = '%u' "; $vars[] = $user; }
+    	if(isset($user) && isset($solver))
+            	$query.=" and ";
+ 	if(isset($solver))
+            {$query.=" solver = '%u' ";$vars[] = $solver; }
+  	//выдача по статусу
+	if(isset($post_status) && $post_status == 'new_for_solver')
+	   		{
+   			if(isset($user) || isset($solver))
+   		    	$query.=" AND ";
+   		  	$query.=" ( status = 'NEW' or status='GETS' ) ";
+   		  	}
+   	else if(isset($post_status) && $post_status!="-1" && $post_status!="")
+   			{
+   			if(isset($user) || isset($solver))
+   		    	$query.=" AND ";
+   		  	$query.=" status = '%s' "; $vars[] = $post_status;
+   		  	}
+  	$query .= " order by id DESC ";
+	$res = $task->db->query($query,$vars) or die($task->db->error());
+	$row_number = 0;
+	while( ($row = $res->fetch_assoc() ) && $row_number<$on_page ){ 
+		$row_number++;
+	?>
+	<a href="<?php echo url(NULL, 'TASK', 'task', 'id='.$row['id']); ?>" >
+		<div class="task"><?php echo 	$row['section']; ?></div>
+	</a>
+	<?php }
+	if($row_number==0) echo "<h2>Вы не сделали ни одного ".url('заказа','TASK','add_task')."</h2>";
+	?>
+
+</div></div>
+
+<?php require(MOBILE_ROOT."/footer.php");?>

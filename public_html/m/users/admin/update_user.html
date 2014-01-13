@@ -1,0 +1,14 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+<?php
+show_msg("Информация", "Настройки пользователя можно задать в <a href='http://".DOMAIN.url(NULL,'USERS','admin/update_user')."'>полной версии</a> сайта ", MSG_INFO,MSG_RETURN);
+?>
+
+</div></div>
+
+<?php require_once(MOBILE_ROOT."/footer.php");?>
+ 

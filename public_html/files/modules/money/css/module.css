@@ -1,0 +1,101 @@
+.money_blockname { color:grey; font: normal 1em; margin:20px; border-bottom: 1px groove gray; }
+.money_blockcontent{ border: 1px solid grey; border-radius:5px; background: #FEFEFE; box-shadow: 0 0 10px rgba(55, 55, 55, 0.5); margin-bottom:32px;}
+
+.money_incon{
+	margin: 10px 0 10px 10% ;
+	padding:8px;
+	width:30%;
+	float:left;
+	box-shadow: 0 0 10px rgba(100, 100, 100, 0.5);
+	}
+.money_incon img { width:64px; height:64px; margin: 12px 32px; float:left;}
+.money_incon  h3	a{ margin: 16px 0 8px 0; padding:0; font: bold; text-align:left; color: grey; text-transform:uppercase; text-decoration: none;}
+.money_incon  a	{ text-decoration: none; }
+.money_incon  .money_modinfo { color:grey; font-size:0.9em; line-height:1em;}
+#pay_box{
+	width:90%;
+	width=100%;
+	max-width:830px;
+	margin-bottom:50px;
+	background-color:#FAFAFA;
+}
+.pay-form {
+	display: none;
+	position: fixed;
+	z-index: 99;
+	top:50%;
+	margin-top: -80px;
+	left: 50%;
+	margin-left: -161px;
+	border: 1px solid #ffa71f;
+}
+.pay-form .pay-methd-name{
+	margin:0;
+	padding: 0;
+	float: right;
+	font-size: 0.7em;
+	line-height: 1em;
+	position: relative;
+}
+
+.pay-form input{
+    background-color: #ffa71f;
+    border-radius: 20px;
+    color: white;
+    font-size: 26px;
+    height: 40px;
+    padding: 0 20px 5px 20px;
+    text-align: center;
+    width: 200px;
+    display: block;
+    float: none;
+    margin: 20px;
+}
+.pay-form input:focus {
+    border: 0 solid blue;
+    box-shadow: 0 0 10px blue;
+}
+.pay-form .rub {
+    color: #fff;
+    float: right;
+    font-weight: bolder;
+    left: -35px;
+    position: relative;
+    top: -65px;
+}
+.pay-form a{
+	float: right;
+	cursor: pointer;
+	font-size: 1.2em;
+    text-decoration: underline;
+    margin:5px 25px;
+}
+.pay-form .pay-ok {
+    border-radius: 6px;
+    display: inline;
+    float: right;
+    margin: 0;
+    width: auto;
+    cursor: pointer;
+}
+.payment-icon{
+	display: inline-block;
+	margin:16px;
+	cursor: pointer;
+	position: relative;
+}
+.payment-icon .commission{
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 74px;
+	text-align: center;
+	background-color: #eab60f;
+	font-size: 1.2em;
+	color: white;
+	-webkit-border-top-right-radius: 20px;
+	-moz-border-top-right-radius: 20px;
+	border-top-right-radius: 20px;
+}
+

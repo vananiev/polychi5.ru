@@ -1,0 +1,69 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+	<?php global $USER; ?>
+	<?php if(isset($USER)){ ?>   
+   <p align="center" ><font style="font-family:Arial; color:#333; font-size:26px; font-style:bolder;"><?php echo $USER['balance']; ?> руб</font></p>
+   <?php }else{?> 
+   <p>Оплатить заказ можно посредтвом Вебмани, Яндекс.Денег, Робокассы и напрямую через терминалы (сервис вебмани-чек).</p>
+	<p>Комиссия сайта Получи 5 равна 0. Комиссия Вебмани - 0,8%, Яндекс.Денег - 0,5%, Робокассы - зависит от способа отплаты.</p>
+	<p>Пример платежной формы приведен ниже. Если ваше задание готово, перед тем как получить его, нужно выполнить оплату. 
+	Для оплаты нужно ввести сумму, которую вы указали при заказе и нажать одну из кнопок.
+	Далее вы будете направлены на страницу сайта платежной системы и по окончании оплаты, автоматически начнется скачивание решения по заказу.    
+   </p>
+   <?php }?>
+   <?php	
+   // это анонимный пользователь с балансом больше нуля
+	if( isset($USER) && is_password_null() && $USER['balance']>0){
+		$msg = "Рекомендуем сменить логин и установить ".url('пароль', 'USERS','admin/update_user').
+		", чтобы защитить свои деньги на ".url('балансе', 'TASK', 'get_balance',NULL,NULL,'target="_blank"')." ";
+		show_msg("Совет", $msg, MSG_INFO, MSG_OK);
+	}
+	?>
+	
+	<input id='summ' type="text" class="field" name="Symma" placeholder="Сумма пополнения">
+	<script type="text/javascript">
+		<?php if(isset($_GET['sum'])) { ?>$("#summ").val(<?php echo $_GET['sum']; ?>); <?php } ?>
+	</script>
+
+	<?php if(isset($_GET['id'])) $id=(int)$_GET['id'];	?>
+	<form method="POST" action="<?php echo url(NULL, 'YANDEX_MONEY', 'pay');?>" onsubmit="setSumm();">
+		<input id="yasumm" type="hidden" name="Symma" value="100">
+		<input class="field" type="submit"  value="Яндекс.Деньги" name="go0">
+		<span class='info_text'><a href='<?php echo "http://polychi5.ru".url(NULL,'YANDEX_MONEY','info/how_pay');?>' target='_blank'>[Информация о порядке оплаты]</a></span>
+		<input type="hidden" name="Naznachenie" value="<?php echo isset($id)?"Получи [5]. Оплата за решение задания #".$id:"Получи [5]. Пополнение баланса пользователя: ".$USER['login']; ?>">
+		<?php if(isset($id)) { ?><input type="hidden" name="id" value="<?php echo $id; ?>"/> <?php } ?>
+	</form>
+
+	<form method="POST" action="<?php echo url(NULL, 'WEBMONEY', 'pay');?>" onsubmit="setSumm();">
+		<input id="wmsumm" type="hidden" name="Symma" value="100">
+		<input class="field" type="submit"  value="Вебмани" name="go0">
+		<span class='info_text'><a href='http://wiki.webmoney.ru/wiki/show/Оплата+товаров+и+услуг+через+сервис+Мерчант' target='_blank'>[Информация о порядке оплаты]</a></span>
+		<input type="hidden" name="Koshelek" value="<?php echo KOSHELEK; ?>">
+		<input type="hidden" name="Naznachenie" value="<?php echo isset($id)?"Получи [5]. Оплата за решение задания #".$id:"Получи [5]. Пополнение баланса пользователя: ".$USER['login']; ?>">
+		<?php if(isset($id)) { ?><input type="hidden" name="id" value="<?php echo $id; ?>"/> <?php } ?>
+	</form>
+
+	<form method="POST" action="<?php echo url(NULL, 'ROBOKASSA', 'pay');?>" onsubmit="setSumm();">
+		<input id="rbsumm" type="hidden" name="Symma" value="100">
+		<input class="field"  type="submit"  value="Робокасса" name="go0">
+		<span class='info_text'><a href='<?php echo "http://polychi5.ru".url(NULL,'ROBOKASSA','info/how_pay');?>' target='_blank'>[Информация о порядке оплаты]</a></span>
+		<input type="hidden" name="Naznachenie" value="<?php echo isset($id)?"Получи [5]. Оплата за решение задания #".$id:"Получи [5]. Пополнение баланса пользователя: ".$USER['login']; ?>">
+		<?php if(isset($id)) { ?><input type="hidden" name="id" value="<?php echo $id; ?>"/> <?php } ?>
+	</form>
+
+</div></div>
+<script type="text/javascript" >
+function setSumm(){
+	summ = document.getElementById("summ").value;
+	document.getElementById("wmsumm").value = summ;
+	document.getElementById("yasumm").value = summ;
+	document.getElementById("rbsumm").value = summ;
+	document.getElementById("termsumm").value = summ;
+}
+</script>
+
+<?php require(MOBILE_ROOT."/footer.php");?>

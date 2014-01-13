@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Host: m.polychi5.ru
+Sitemap: http://m.polychi5.ru/sitemap.xml

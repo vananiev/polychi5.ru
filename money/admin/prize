@@ -1,0 +1,18 @@
+<?php
+	/******************************************************************
+					Создать акцию "Приз"
+	******************************************************************/
+	
+	if(check_admin_access()) return;
+	//создаем тавлицу
+	$money-db->query("CREATE TABLE IF NOT EXISTS `prize` (
+		number int(3) unsigned NOT NULL,
+		summa int(3) default NULL ,
+		until int(3) timestamp,
+		user int(3) default '-1',
+		user_ip char(15) default '',
+		user_http_agent char(15) default '',
+		UNIQUE (`number`)
+		)") or die($money->db->error());
+	echo "Prize DB Make ok<br>";
+?>

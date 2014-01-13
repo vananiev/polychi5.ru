@@ -1,0 +1,30 @@
+<Files ~ "\.(html|jpg|jpeg|png|ico|gif|swf|css|js|rar|txt)$">
+	allow from all
+</Files> 
+RewriteEngine on
+
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^m/(.*) /$1 [L,QSA]
+
+# Редирект на любую страницу, главное чтобы был 200
+RewriteRule ^yandex/authorize.html /index.html [L,QSA]
+
+# get cookies
+RewriteCond %{HTTP_COOKIE} uid=([^;]+) [NC]
+RewriteRule . - [ENV=uid:%1]
+RewriteCond %{HTTP_COOKIE} authorize=([^;]+) [NC]
+RewriteRule . - [ENV=authorize:%1]
+
+# alias sites. Payment pages
+RewriteCond %{REQUEST_URI} ^/task/get_balance\.html$ [NC,OR]
+RewriteCond %{REQUEST_URI} ^/task/get_solving\.html$ [NC]
+RewriteCond %{HTTP_HOST} !^m\.polychi5\.ru$ [NC]
+RewriteRule . http://m.polychi5.ru%{REQUEST_URI}?uid=%{ENV:uid}&authorize=%{ENV:authorize} [QSA,L]
+
+# if cant find on mobile server search in main server
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(files/.*)$ http://polychi5.ru/$1 [L,QSA]
+
+AddHandler php5-script .php .html
+

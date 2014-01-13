@@ -1,0 +1,247 @@
+<?php /*
+		**************************************************************
+			Добавление/редактирование/удаление нового вопроса в систему тикетов
+			Изменение статуса тикета
+		**************************************************************
+		параметры POST:
+		ticket_id - номер тикета
+		text - текст вопроса
+		edit_question - редактируемое сообщение
+		new_status - изменить статус тикета с ticket_id
+		loadfile - прикрепляемый файл
+
+		GET:
+		ticket_id - номер тикета
+		mail	- почта обратившегося не регистрированного пользователя
+		del_question 	- удаляемый вопрос
+		password - пароль доступа к запросу
+		*/
+		if(isset($_GET['ticket_id'])) $_POST['ticket_id'] = $_GET['ticket_id'];
+		if(isset($_POST['ticket_id']) && is_numeric($_POST['ticket_id'])) $post_ticket_id = (int)$_POST['ticket_id'];
+		if(isset($_POST['text'])) $post_text = $_POST['text']; else $post_text = NULL;
+		if(isset($_POST['edit_question']) && is_numeric($_POST['edit_question'])) $edit_question = (int)$_POST['edit_question']; else $edit_question = NULL;
+		if(isset($_POST['new_status'])) $new_status = $_POST['new_status'];
+		if(isset($_GET['mail'])) $mail = htmlspecialchars($_GET['mail'],ENT_QUOTES);		// в запросах в БД не учавстнует, а только выводится на экран
+			else $mail = NULL;
+		if(isset($_GET['del_question']) && is_numeric($_GET['del_question'])) $del_question = (int)$_GET['del_question'];
+		if(!isset($_FILES['loadfile'])) $_FILES['loadfile']=NULL;
+		//ввод пароля доступа к тикету
+		if(!isset($_GET['password']))
+			$password = "";
+		else if(strlen($_GET['password'])==32)
+			$password = $_GET['password'];
+		else
+			$password = md5($_GET['password']);
+
+?>
+<?php
+	if(!isset($post_ticket_id))
+		{
+		show_msg(NULL,'Не выбран тикет',MSG_INFO);
+		return;
+		}
+	// удаляем сообщение
+	if(isset($del_question))
+		{
+		if(call_user_func($ticket->del_question, $del_question))
+			show_msg("Выполнено","Сообщение успешно удалено");
+		else
+			show_msg(NULL,"Сообщение не удалено", MSG_WARNING);
+		return;
+		}
+	
+	/*/ изменяем\добавляем текст вопроса
+	$ret = call_user_func($ticket->add_question, $post_ticket_id, $edit_question, $post_text, $_FILES['loadfile'], $mail, $password);
+	if(is_int($ret))
+		{
+		 $text2 = "Cообщение сохранено.<br>";
+		if($post_ticket_id == 0)	//это отзыв
+			$text2 .= url('[ok]', 'TICKET', 'otziv');
+		else
+			{
+			$args = 'ticket_id='.$post_ticket_id;
+			if($mail!=NULL)
+				$args .= "&mail=".$mail;
+			//$text2 .= url('[ok]', 'TICKET', 'dialog', $args);
+			}
+		show_msg("Выполнено",$text2,MSG_INFO,MSG_RETURN);
+		}
+	else
+		show_msg(NULL, $ret, MSG_WARNING);
+	*/
+	/*
+	//от кого
+	$row = ticket($post_ticket_id);
+	if(( isset($_SESSION['user_id']) && $_SESSION['user_id'] == $row['from_id'] ) ||
+		(isset($mail) && $row['from_mail']==$mail)||
+		$post_ticket_id == 0 ||
+		check_right('TKT_SUPPORT_ANS')
+		)
+    	{
+		//кто обратился?
+		if(isset($_SESSION['user_id']))
+			{
+			$from = $_SESSION['user_id'];
+			}
+		else if(isset($mail) && ereg("^[a-zA-Z_0-9\-]{1,}@[a-zA-Z_0-9\-]{1,}\.",$mail))
+			{
+			$from = -1;
+			}
+		else if($post_ticket_id == 0)	//это отзыв
+			{
+			$from = -1;
+			}
+		else
+			{
+			show_msg(NULL,"Вы не указали почту для обратной связи.",MSG_WARNING);
+			return;
+			}
+
+		//меняем статус
+	    if(isset($new_status) && isset($post_ticket_id) )
+	    	{
+	       	$query = "UPDATE $table_tickets
+	       				SET  status = '{$new_status}'
+	       				WHERE id = {$post_ticket_id}";
+			mysql_query($query,$msconnect_ticket) or die(mysql_error());
+			$text = "Статус изменен.<br>";
+			if($post_ticket_id == 0)	//это отзыв
+				$text .= url('[ok]', 'TICKET', 'otziv');
+			else
+				{
+				$args = 'ticket_id='.$post_ticket_id;
+				if(isset($mail))
+					$args .= "&mail=".$mail;
+				$text .= url('[ok]', 'TICKET', 'dialog', $args);
+				}
+			show_msg("Выполнено",$text,MSG_INFO,MSG_NO_BACK);
+			return;
+	    	}
+
+		//все ли поля заполнены?
+		if(isset($post_text) && $post_text!='')
+			{
+			//загрузка файла
+			$ext ="";
+			$file_temp = "";
+			if(isset($_FILES['loadfile']) && $_FILES['loadfile']['name']!="")
+				{
+				$ext =strtolower(substr($_FILES['loadfile']['name'],strlen($_FILES['loadfile']['name'])-4,4));
+				if ($ext==".rar")
+					{
+					if($_FILES["loadfile"]["size"] > MAX_FILE_SIZE*1024*1024)
+			   			{
+			     			show_msg(NULL,"Размер файла превышает ".MAX_FILE_SIZE." мегабайт",MSG_WARNING);
+			     			return;
+			   			}
+					$file_temp = TICKET_FILE."/_temp_".(int)(rand()).$ext;
+			   		if(copy($_FILES['loadfile']['tmp_name'],$file_temp))   //загружаем временный файл
+			   			{
+						//echo "Файл загружен<br>";
+				                    $issetFile = 'YES';
+				                    }
+					else
+					 	{
+						show_msg(NULL,"Возникла ошибка при загрузке файла. Проверьте интернет соединение.",MSG_WARNING);
+						return;
+			  		 	}
+					}
+				else
+					{
+					show_msg(NULL,"Ошибка. Разрешены только файлы Win-Rar (.rar).",MSG_WARNING);
+					return;
+					}
+				}
+			else
+				$issetFile = 'NO'; //файла нет
+
+			$ticket_id = $post_ticket_id;
+	        //изменяем статус
+	        //формируем запрос в систему тикетов
+	        $query = "UPDATE $table_tickets
+					SET last_visit = CURRENT_TIMESTAMP(), ";
+			if ( check_right('TKT_SUPPORT_ANS') )
+				$query .= " status = 'ANSWERED' ";
+			else
+				$query .= " status = 'OPENED' ";
+			$query.= " WHERE id = $ticket_id";
+			mysql_query($query,$msconnect_ticket) or die(mysql_error());
+			//добавляем/редактируем сообщение
+			//$post_text = str_replace("\r\n","<br>",$post_text);
+			if(isset($edit_question))
+				{
+					if ( !check_right('TKT_DEL_MODF_MSG',R_MSG)) return; //проверка прав на редактирование
+		        	$query = "UPDATE $table_questions
+						SET
+						text = '{$post_text}',
+						file = '$issetFile',
+						date =	CURRENT_TIMESTAMP()
+						WHERE id='{$edit_question}'";
+				mysql_query($query,$msconnect_ticket) or die(mysql_error());
+				$id = $edit_question;
+				}
+			else
+				{
+		        	$query = "INSERT INTO $table_questions
+						(ticket_id,from_id,text,file,date)
+						VALUES('$ticket_id',
+						'$from',
+						'{$post_text}',
+						'$issetFile',
+						CURRENT_TIMESTAMP())";
+				mysql_query($query,$msconnect_ticket) or die(mysql_error());
+				$id = mysql_insert_id();
+				}
+			//переименовываем временный файл
+			if(isset($_FILES['loadfile'])  && $_FILES['loadfile']['name']!="")
+				{
+				$file_name = TICKET_FILE."/".$id.$ext;
+				@unlink($file_name);
+				rename($file_temp,$file_name);
+				}
+			//отсылаем ответ службы поддержки(администратора) по почте
+			if( $row['from_mail']!="" && check_right('TKT_SUPPORT_ANS')  )
+				{
+				$sub ="Ответ на Ваш вопрос";
+				$rel = url (NULL, 'TICKET', 'dialog', 'ticket_id='.$ticket_id.'&mail='.$row['from_mail']);
+				$mes = "Смотрите переписку по адресу: http://{$_SERVER['SERVER_NAME']}".$rel;
+				$mes .= "\n".$post_text;
+				//if($issetFile == 'YES')
+				//	$mes .= "\nПрикрепленный файл: http://{$_SERVER['SERVER_NAME']}/".TICKET_FILE_RELATIVE."/$ticket_id.rar";
+				$mes .=	"\n\nС уважением, http://{$_SERVER['SERVER_NAME']}/.";
+				sendmail ($row['from_mail'],$sub,$mes);
+				}
+
+			//отсылаем письмо службе поддержки о новом сообщении
+			if( !check_right('TKT_SUPPORT_ANS') )
+				{
+				// получаем список пользователей с правом
+				$users = users_whith_right('TKT_SUPPORT_ANS','mail');
+				foreach($users as $user)
+					{
+					$sub ="Новое сообщение";
+					$rel = url (NULL, 'TICKET', 'dialog', 'ticket_id='.$ticket_id);
+					$mes = "Смотрите переписку по адресу: http://{$_SERVER['SERVER_NAME']}".$rel;
+					$mes .= "\n".$post_text;
+					//if($issetFile == 'YES')
+					//	$mes .= "\nПрикрепленный файл: http://{$_SERVER['SERVER_NAME']}/".TICKET_FILE_RELATIVE."/$ticket_id.rar";
+					$mes .=	"\n\nС уважением, http://{$_SERVER['SERVER_NAME']}/.";
+					sendmail ($user['mail'],$sub,$mes); //отсылаем службе поддержки
+					}
+				}
+
+           
+			}
+		else
+			{
+			show_msg(NULL,"Не верно составлен запрос. Заполните корректно поля.",MSG_WARNING);
+			return;
+			}
+		}
+	else
+		{
+		show_msg(NULL,"У вас нет доступа.",MSG_CRITICAL);
+		return;
+		}
+	*/
+?>

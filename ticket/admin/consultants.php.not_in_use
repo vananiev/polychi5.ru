@@ -1,0 +1,26 @@
+<?php
+	/*
+		Список консультантов сайта (движок мессенджера TalkDrivar). 
+		Они перечислены в tickets/talkdriver
+	*/
+?>
+<h1><?php echo $URL['TITLE']; ?></h1>
+<div class="consultants">
+<div style="color:grey; font-size:12px;">Консультанты сайта:</div>
+<?php
+	/* Сообщения присланные от TalkDriver */
+	// выводим список консультантов только для службы поддержки
+	if( check_right('TKT_SUPPORT_ANS')){
+		foreach($TD_CONSULTANT as $key=>$cons){?>
+			<a <?php echo td_link( $key + MIN_CONSULTANT_ID ); ?> ><?php echo $cons['NAME']?></a> 
+			<img src="<?php echo td_cnt_new_mes( $key + MIN_CONSULTANT_ID); ?>" height=14 align=absmiddle>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+		<?php
+		}
+	}
+?>
+</div>
+<style>
+.consultants{ text-align:center; font-size:24px; color:blue; border-radius:10px; border:1px solid grey; background-color:#FEFEFE; margin:20px auto; text-decoration:none; padding:10px;
+				width:40%;}
+</style>

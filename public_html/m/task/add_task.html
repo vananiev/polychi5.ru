@@ -1,0 +1,73 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT']."/../../before.php"); ?>
+<?php require_once(MOBILE_ROOT."/head.php"); ?>
+<?php require(MOBILE_ROOT.'/menu.php') ?>
+
+<div class="mt-content-auto mt-indent"><div id="main">
+
+
+<?php if(user_in_group('SOLVER') && (isset($_SESSION['user_id']) && $_SESSION['user_id']!=0 ) ) { echo "Вы не можете выполнить заказ"; return;} ?>
+<script type="text/javascript" language="JavaScript" src="<?php echo PLUGING_ROOT_RELATIVE."/calendar/calendar_us.js";?>"></script>
+
+<form method="POST" action="<?php echo url(NULL, 'TASK', 'add_task_act');?>" enctype="multipart/form-data" name="send_task">
+	<div class="table_order">
+		<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo 1000000*MAX_FILE_SIZE;?>">
+		<input id='section' class='field' name="section" placeholder="Предмет">
+		<input type='hidden' name='subsection' value='-'>
+		<input type="text" class='field' name="price" placeholder="Стоимость, руб">
+		<input type="text" class='field' name="data"  placeholder="Решить до" value="<?php
+        $date = date('d F Y', time()+84600*7);
+        //замена русских имен месяцев для функции  strtotime()
+				$month_ru = Array('Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь');
+				$month_en = Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+				for($i=0;$i<12;$i++)
+					$date = str_replace($month_en[$i],$month_ru[$i],$date);
+        echo $date;
+      ?>"/>
+
+		<input class='field' type="hidden" name="r_hour" value="0">
+		<input type='hidden' name='mode' value='1'>
+
+		<textarea name="task_info" class='field'id="taskdesc" onClick="if(this.value=='Что нужно сделать:')this.value=''">Что нужно сделать:</textarea>
+		<input id="filefield" class='field' type="file" name="loadfile" size="13">
+		<input id="send-button" class='field' type="button" value="Отправить задание" name="B1">
+	</div>
+
+	<div class="taskLoaded">
+	  <h2>Оповестить о решении</h2>
+	    <select name="notificationMethod" id="selectMethod" class="field">
+	      <option value="phoneNotificate" <?php if(isset($USER)&&$USER['notification']=='phone')echo "selected";?>>по смс</option>
+	      <option value="mailNotificate" <?php if(isset($USER)&&$USER['notification']=='mail')echo "selected";?>>по e-mail</option>
+	      <option value="noNotificate" <?php if($USER['notification']==NULL) echo "selected";?> >не оповещать</option>
+	    </select>
+	    <input id="phoneNotificate" type="text" name="phone" class="field" placeholder="79001002030" value="<?php echo $USER['phone']; ?>">
+	    <input id="mailNotificate" type="text" name="mail"  class="field" placeholder="e-mail" value="<?php echo $USER['mail']; ?>">
+	    <p id="noNotificate">
+	       Оповещения присылаться не будут. Смотрите статус задания в главном меню по ссылке <?php echo url('Проверить заказ','TASK','check');?>
+	    </p>
+	    <input type="submit" style="display:inline;" value="ok" class="field">
+</form>
+</div></div>
+
+</div>
+<script type="text/javascript">
+$('#selectMethod').change( function() { showNotificateItem();} );
+showNotificateItem();
+function showNotificateItem(){
+  $('#phoneNotificate').css('display',"none");
+  $('#mailNotificate').css('display',"none");
+  $('#noNotificate').css('display',"none");
+  document.getElementById( document.getElementById("selectMethod").value ).style.display = "block";
+}
+
+<?php
+	if(isset($_GET['section'])) echo "\$('#section').val('".htmlspecialchars($_GET['section'],ENT_QUOTES)."');";
+	if(isset($_GET['price'])) echo "\$('#price').val('".htmlspecialchars($_GET['price'],ENT_QUOTES)."');";
+?>
+
+$("#send-button").click(function(){
+	$(".table_order").css('display',"none");
+	setTimeout(function(){ $(".taskLoaded").css('display','block')},300);
+});
+</script>
+
+<?php require(MOBILE_ROOT."/footer.php");?>

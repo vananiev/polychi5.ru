@@ -1,0 +1,108 @@
+.mt-tab-nav li.selected a {
+	color:#d4d4d4;
+}
+.mt-form,
+.mt-custom-form,
+table,
+table caption,
+.mt-paging-selector,
+.mt-footer,
+.mt-expandable-content .mt-opener span{
+	background-color:#ffffff;
+}
+.mt-search,
+.mt-menu-btn,
+.mt-form-field,
+table tr:nth-of-type(odd) td,
+.mt-links a,
+.mt-single-link,
+table th,
+.mt-paging,
+.mt-breadcrumbs,
+.mt-tab-nav,
+.mt-gallery .mt-next,
+.mt-gallery .mt-prev,
+.mt-menu li,
+.mt-menu li li,
+.mt-menu li li:first-child,
+.mt-custom-form input.mt-btn,
+.mt-form input.mt-btn,
+.mt-expandable-content .mt-opener,
+.mt-expandable-content .mt-opener span,
+.mt-service,
+.mt-accordion header,
+.mt-search .mt-btn,
+.mt-call a,
+.mt-main-header {
+	background-color:#fdfffc;
+}
+.mt-search .mt-btn{
+	-moz-box-shadow:0 -1px 1px #fdfffc;
+	-webkit-box-shadow:0 -1px 1px #fdfffc;
+	box-shadow:0 -1px 1px #fdfffc;
+}
+.mt-menu-btn,
+.mt-custom-form .mt-form-field label,
+.mt-custom-form input.mt-btn,
+.mt-form input.mt-btn,
+.mt-paging li a,
+table caption{
+	text-shadow:1px 1px 1px #d4d4d4;
+}
+.mt-menu,
+.mt-menu li li:first-child,
+.mt-form,
+.mt-form ul,
+.mt-form li,
+.mt-custom-form,
+.mt-form-field,
+.mt-form-field li,
+.mt-form-field span,
+.mt-form-field ul,
+.mt-custom-form ul.mt-small li,
+.mt-custom-form .mt-control,
+table caption,
+table td,
+table tr:nth-of-type(odd) td,
+.mt-links li,
+.mt-links a,
+.mt-single-link,
+.mt-paging,
+.mt-breadcrumbs,
+.mt-tab-nav,
+.mt-tab-content,
+.mt-footer,
+.mt-service,
+.mt-custom-form .mt-small li,
+.mt-expandable-content,
+.mt-menu-btn,
+table th,
+.mt-gallery,
+.mt-custom-form input.mt-btn,
+.mt-form input.mt-btn,
+.mt-accordion,
+.mt-accordion .mt-content,
+.mt-paging li.mt-active,
+.mt-tab-nav li.selected a,
+.mt-paging li.mt-active,
+.mt-menu li {
+	border-color:#d4d4d4 !important;
+}
+pre {
+	border-color:#ffffff;
+}
+h1,
+h2,
+h3,
+h4 {
+	color:#d4d4d4;
+}
+a,
+.mt-ajax-link,
+.mt-footer a {
+	color:#d4d4d4;
+}
+body {
+	background-color:#ffffff !important;
+	color:#333333;
+}

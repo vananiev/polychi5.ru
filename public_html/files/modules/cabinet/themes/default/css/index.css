@@ -1,0 +1,175 @@
+﻿html	
+		{
+		width:100%;
+		height:100%;
+		}
+body
+		{
+		background-color: rgb(255, 255, 255);
+		color: rgb(0, 0, 0); 
+		padding:0;	/* с края страницы */
+		margin:0;
+		height:100%;	/*задаем минимальную высоту для всех кроме ie*/
+		font-size:16px;
+		}
+.main	{
+		position:relative;
+		height:auto!important;	/* Растягиваем вниз сколько надо*/
+		height:100%; /* для IE*/
+		min-height:100%; /*для всех кроме IE*/
+		width:100%!important;
+		width:100%;	/* для IE*/
+		max-width:100%;
+		min-width:1000px;
+		font-size:0.9em;
+		overflow:hidden;
+		}
+img		{ border:none;}
+.head	
+		{
+		position:relative;
+		width:100%;
+		z-index:10;
+		}
+
+
+.content	{
+			/*Контент*/
+			position:relative;
+			margin-top:30px;
+			font-size:1em;
+			line-height: 1.6em;
+			font-family: Trebuchet MS;
+			font-family: Arial,"Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+			font-style: normal;		
+			padding:20px 20px 0 20px;
+			text-indent:0;
+			}
+
+.footer	 	{
+			/*Футер*/		
+			position:relative;
+			bottom:0px;
+			width:100% !important;
+			width:100%;
+			}
+.footer-up-img 			{ position:absolute; right:3px;top:0; width:74px; height:64px; }
+.footer-up-img a			{ position:absolute; width:100%; height:100%; background-image:url('../images/footer-up.png');}
+.footer-up-img a:hover	{ background-position:74px 0;}
+.footer-content  		{ position:absolute; top:43px; width:100%; background-color: #555555;}
+.footer-block			{ position:relative; color:#EDFFE3;font-size:0.8em; font-family:Arial; padding:15px; line-height:1.2em; float:left; }
+.footer-block .headline	{ width: 100%; margin-bottom: 10px; padding-bottom:1px; color:#FF7EAE; font-size:1.1em; font-family: Trebuchet MS, sans-serif; border-bottom:1px solid #BEBEBE;} 
+.footer-block a			{ color:#ADFF7E}
+.footer-block a:hover	{ color:#EDFFE3}
+
+a			{ color: #497CD0;}
+a:hover		{ color: #494fD0; }
+
+/*--------------------- table --------------------------------------*/
+/*
+  project: CSS - table design
+  type: stylesheet
+  description: foggycountry
+*/
+.styled_table {
+  border-collapse: collapse;
+  border: 2px solid #C5BA85;
+  font: normal 10px verdana, arial, helvetica, sans-serif;
+  font-family: Georgia,Arial,Helvetica,sans-serif;
+  color: #333333;
+  background: #BFE756;
+  }
+.styled_table caption {
+  padding: 0 .4em .4em;
+  text-align: left;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333333;
+  background: transparent;
+  }
+.styled_table td, .styled_table th {
+  color: #636363;
+  border: 1px solid #cc9;
+  font-size:14px;
+  padding:4px 8px;
+  }
+.styled_table thead th, .styled_table tfoot th {
+  font: normal 11px georgia, verdana, arial, helvetica, sans-serif;
+  border: transparent;
+  text-align: left;
+  font-size: 1em;
+  font-weight: bold;
+  color: #333333;
+  background: #C5BA85;
+  }
+.styled_table tbody td a {
+  background: transparent;
+  color: #72724c;
+  text-decoration: none;
+  }
+.styled_table tbody td a:hover {
+  background: transparent;
+  color: #636363;
+  }
+.styled_table tbody th { text-align:center; text-transform: uppercase; background: #C5BA85; }
+.styled_table  tbody th a {
+  font: normal 11px georgia, verdana, arial, helvetica, sans-serif;
+  background: transparent;
+  color: #636363;
+  text-decoration: none;
+  font-weight:normal;
+  font-weight: bold;
+  text-align:center;
+  }
+.styled_table tbody th a:hover {
+  background: transparent;
+  color: #333333;
+  }
+.styled_table tbody td {
+  vertical-align: top;
+  text-align: left;
+  }
+.styled_table tbody th {  vertical-align: top; }
+.styled_table tfoot td {
+  border: 1px solid #C5BA85;
+  background: #C5BA85;
+  }
+.styled_table .odd {
+  background: #BAE354;
+  }
+.styled_table tbody tr:hover {
+  color: #333444;
+  background: #DDCFAE;
+  }
+.styled_table tbody tr:hover th,
+.styled_table tbody tr.odd:hover th {
+  background: #C5BA85;
+  }
+
+table			{
+			border-spacing: 0 0;
+			border-collapse: collapse; /* Отображать только одинарные линии */
+			}
+td 			{
+			border:none;
+			}
+table .td_who{
+			margin:30px 0 0 0;
+			padding: 10px;
+			border: 1px solid grey;
+			text-align:left;
+			width: 200px;
+			}
+.table_header {
+			font-weight: bold;
+			color:#494FD0;
+			}
+.table_history {
+			width:1000px;
+			}
+.table_history  td  {
+			border:1px solid grey;
+			}
+
+/*---------------------/ table --------------------------------------*/

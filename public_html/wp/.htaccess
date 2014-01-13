@@ -1,0 +1,18 @@
+<Files ~ "\.(jpg|jpeg|png|ico|gif|swf|css|js|rar|txt|php)$">
+	order allow,deny
+	allow from all
+</Files>
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /wp/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{QUERY_STRING} ^$
+RewriteRule /wp/$ / [L,R=301]
+RewriteRule wp-login.php /users/in.html [L,R=301]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /wp/index.php [L]
+</IfModule>
+
+# END WordPress
